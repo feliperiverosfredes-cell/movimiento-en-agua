@@ -1486,16 +1486,17 @@ tr:hover td{background:var(--blue-bg)}
           <div id="dr-notas" class="note-box" style="margin-top:0"></div>
         </div>
 
-        <!-- ACCESO AL PORTAL (al final) -->
+        <!-- ACCESO AL PORTAL (compacto, al final) -->
         <div class="dr-sec">
           <div class="dr-sec-title">Acceso al portal</div>
-          <div class="dr-grid2">
-            <div class="dr-info-card">
-              <div class="dr-info-lbl">Usuario</div>
-              <div class="dr-info-val hi" id="dr-email">—</div>
+          <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding:10px 12px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0">
+            <div>
+              <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;margin-bottom:2px">Usuario</div>
+              <div style="font-size:13px;font-weight:700;color:#0369a1" id="dr-email">—</div>
             </div>
-            <div class="dr-info-card">
-              <div class="dr-info-lbl">Contraseña</div>
+            <div style="width:1px;height:30px;background:#e2e8f0;flex-shrink:0"></div>
+            <div style="flex:1">
+              <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;margin-bottom:2px">Contraseña</div>
               <div id="dr-pass-block"></div>
             </div>
           </div>
@@ -2632,13 +2633,13 @@ function openStuDrawer(id){
   document.getElementById('dr-avatar').textContent=ini2;
   document.getElementById('dr-nom').textContent=s.nom;
 
-  // Color header según morosidad
+  // Color header según morosidad — colores manual de marca
   const mor=getMorosidadStatus(s);
   const hdrColors={
-    pagado:'linear-gradient(135deg,#0369a1,#38bdf8)',
-    pendiente:'linear-gradient(135deg,#d97706,#fbbf24)',
-    morosa:'linear-gradient(135deg,#dc2626,#f87171)',
-    inactiva:'linear-gradient(135deg,#475569,#94a3b8)'
+    pagado:'linear-gradient(135deg,#0c2340 0%,#0369a1 100%)',
+    pendiente:'linear-gradient(135deg,#78350f 0%,#d97706 100%)',
+    morosa:'linear-gradient(135deg,#7f1d1d 0%,#dc2626 100%)',
+    inactiva:'linear-gradient(135deg,#1e293b 0%,#475569 100%)'
   };
   const hdrEl=document.querySelector('#stu-drawer .dr-hdr');
   hdrEl.style.background=hdrColors[mor]||hdrColors.inactiva;
@@ -2709,18 +2710,18 @@ function openStuDrawer(id){
   const pb=document.getElementById('dr-pass-block');
   if(s.passChangedByAlumna){
     pb.innerHTML=`
-      <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-        <span style="font-size:13px">🔒</span>
+      <div style="display:flex;align-items:center;gap:8px">
         <span style="font-size:12px;color:#64748b;font-style:italic">Modificada por alumna</span>
-      </div>
-      <button class="btn btn-sm" style="margin-top:8px;width:100%;justify-content:center;background:#fef2f2;color:#dc2626;border:1px solid #fecaca;font-size:12px" onclick="resetStuPass()">↺ Resetear contraseña</button>`;
+        <button onclick="resetStuPass()" style="font-size:11px;font-weight:700;color:#dc2626;background:none;border:none;cursor:pointer;padding:0;text-decoration:underline">Resetear</button>
+      </div>`;
   } else {
     pb.innerHTML=`
-      <div style="display:flex;align-items:center;gap:6px">
-        <div class="dr-info-val" id="dr-pass" style="font-family:monospace;letter-spacing:2px">••••••</div>
-        <button type="button" onclick="toggleDrPass()" style="background:none;border:none;cursor:pointer;font-size:15px;color:var(--gray-400);padding:2px" id="dr-pass-eye">👁</button>
-      </div>
-      <button class="btn btn-sm" style="margin-top:10px;width:100%;justify-content:center;background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;font-size:12px" onclick="resetStuPass()">↺ Generar nueva contraseña</button>`;
+      <div style="display:flex;align-items:center;gap:10px">
+        <span id="dr-pass" style="font-family:monospace;font-size:13px;font-weight:600;color:#0c2340;letter-spacing:1px">••••••</span>
+        <button id="dr-pass-toggle" onclick="toggleDrPass()" style="font-size:11px;font-weight:700;color:#0369a1;background:none;border:none;cursor:pointer;padding:0;letter-spacing:.2px">Mostrar</button>
+        <span style="color:#e2e8f0">·</span>
+        <button onclick="resetStuPass()" style="font-size:11px;font-weight:700;color:#94a3b8;background:none;border:none;cursor:pointer;padding:0;letter-spacing:.2px">Generar nueva</button>
+      </div>`;
   }
 
   renderDrawerChart(s);
@@ -2737,8 +2738,10 @@ function closeStuDrawer(){
 function toggleDrPass(){
   const s=students.find(x=>x.id===currentDrawerStu);if(!s)return;
   drPassVisible=!drPassVisible;
-  document.getElementById('dr-pass').textContent=drPassVisible?s.password:'••••••';
-  document.getElementById('dr-pass-eye').textContent=drPassVisible?'🙈':'👁';
+  const passEl=document.getElementById('dr-pass');
+  const toggleEl=document.getElementById('dr-pass-toggle');
+  if(passEl)passEl.textContent=drPassVisible?s.password:'••••••';
+  if(toggleEl)toggleEl.textContent=drPassVisible?'Ocultar':'Mostrar';
 }
 function resetStuPass(){
   const s=students.find(x=>x.id===currentDrawerStu);if(!s)return;
@@ -2754,30 +2757,55 @@ function renderDrawerChart(s){
   const container=document.getElementById('dr-hist-chart');
   const historial=s.historial||[];
   if(!s.fechaInicio&&!historial.length){
-    container.innerHTML='<div style="color:var(--gray-400);font-size:13px">Sin registros aún.</div>';return;
+    container.innerHTML='<div style="color:var(--gray-400);font-size:13px;padding:8px 0">Sin registros. Usa "+ Registrar mes" para agregar.</div>';return;
   }
   const start=s.fechaInicio?new Date(s.fechaInicio+'-01'):new Date('2025-04-01');
   const now=new Date();
   const months=[];
   let d=new Date(start);
-  while(d<=now){
-    months.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`);
-    d.setMonth(d.getMonth()+1);
-  }
+  while(d<=now){months.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`);d.setMonth(d.getMonth()+1);}
   const pmap={};historial.forEach(h=>pmap[h.mes]=h);
-  const packCls={plan8:'plan8',plan4:'plan4',suelta:'suelta',inactivo:'inactivo'};
-  const packLbl={plan8:'8cl',plan4:'4cl',suelta:'S',inactivo:'—'};
-  container.innerHTML=`<div class="hist-grid">${months.map(m=>{
+  const planBadge={
+    plan12:`<span style="background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">Plan 12</span>`,
+    plan8:`<span style="background:#dbeafe;color:#1e40af;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">Plan 8</span>`,
+    plan4:`<span style="background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">Plan 4</span>`,
+    suelta:`<span style="background:#fef9c3;color:#854d0e;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">Suelta</span>`,
+    inactivo:`<span style="background:#f1f5f9;color:#94a3b8;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">Inactivo</span>`,
+  };
+  const MN2=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const rows=months.map(m=>{
     const [y,mo]=m.split('-');
-    const lbl=MES_NAMES[parseInt(mo)-1]+' '+y.slice(2);
+    const lbl=MN2[parseInt(mo)-1]+' '+y.slice(2);
     const e=pmap[m];
-    if(!e)return`<div class="hcell sinreg" title="${lbl}: sin registro — haz clic para agregar" onclick="editHistEntry('${m}')"><div class="hm">${lbl}</div><div class="hp">+</div></div>`;
-    const cls=packCls[e.pack]||'sinreg';
-    const lp=packLbl[e.pack]||'?';
-    const vstr=e.monto?'$'+Math.round(e.monto/1000)+'k':'';
-    const tt=`${lbl}: ${e.pack}${e.fechaPago?' · Pagó '+e.fechaPago:''}`;
-    return`<div class="hcell ${cls}" title="${tt}" onclick="editHistEntry('${m}')"><div class="hm">${lbl}</div><div class="hp">${lp}</div>${vstr?`<div class="hv">${vstr}</div>`:''}`;
-  }).join('')}</div>`;
+    if(!e){
+      return`<tr style="border-top:1px solid #f1f5f9">
+        <td style="padding:7px 4px;font-size:12px;font-weight:600;color:#94a3b8">${lbl}</td>
+        <td><span style="background:#f8fafc;color:#cbd5e1;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;border:1px dashed #e2e8f0">Sin registro</span></td>
+        <td style="text-align:right;color:#94a3b8;font-size:12px">—</td>
+        <td style="text-align:right;color:#94a3b8;font-size:11px">—</td>
+        <td style="text-align:right"><button onclick="editHistEntry('${m}')" style="background:none;border:none;cursor:pointer;color:#0369a1;font-size:11px;font-weight:700;padding:3px 6px;border-radius:5px;background:#eff6ff">+ Agregar</button></td>
+      </tr>`;
+    }
+    const fmt=n=>n?'$'+Math.round(n/1000)+'k':'—';
+    const fp=e.fechaPago?new Date(e.fechaPago+'T12:00:00').toLocaleDateString('es-CL',{day:'numeric',month:'short'}):'—';
+    return`<tr style="border-top:1px solid #f1f5f9">
+      <td style="padding:7px 4px;font-size:12px;font-weight:700;color:#0c2340">${lbl}</td>
+      <td>${planBadge[e.pack]||planBadge.inactivo}</td>
+      <td style="text-align:right;font-size:12px;font-weight:700;color:#10b981">${fmt(e.monto)}</td>
+      <td style="text-align:right;font-size:11px;color:#64748b">${fp}</td>
+      <td style="text-align:right"><button onclick="editHistEntry('${m}')" style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:12px;padding:2px 5px" title="Editar">✏️</button></td>
+    </tr>`;
+  }).reverse().join(''); // más reciente primero
+  container.innerHTML=`<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse">
+    <thead><tr style="color:#94a3b8;font-size:9px;text-transform:uppercase;letter-spacing:.5px">
+      <th style="text-align:left;padding:0 4px 6px;font-weight:700">Mes</th>
+      <th style="text-align:left;padding:0 4px 6px;font-weight:700">Plan</th>
+      <th style="text-align:right;padding:0 4px 6px;font-weight:700">Monto</th>
+      <th style="text-align:right;padding:0 4px 6px;font-weight:700">Fecha pago</th>
+      <th style="width:60px"></th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div>`;
 }
 function openAddHist(){
   const now=new Date();
