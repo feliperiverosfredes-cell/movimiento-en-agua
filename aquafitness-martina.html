@@ -2636,10 +2636,10 @@ function openStuDrawer(id){
   // Color header según morosidad — colores manual de marca
   const mor=getMorosidadStatus(s);
   const hdrColors={
-    pagado:'linear-gradient(135deg,#0c2340 0%,#0369a1 100%)',
-    pendiente:'linear-gradient(135deg,#78350f 0%,#d97706 100%)',
-    morosa:'linear-gradient(135deg,#7f1d1d 0%,#dc2626 100%)',
-    inactiva:'linear-gradient(135deg,#1e293b 0%,#475569 100%)'
+    pagado:'linear-gradient(135deg,#0284c7 0%,#38bdf8 100%)',
+    pendiente:'linear-gradient(135deg,#d97706 0%,#fbbf24 100%)',
+    morosa:'linear-gradient(135deg,#dc2626 0%,#f87171 100%)',
+    inactiva:'linear-gradient(135deg,#475569 0%,#94a3b8 100%)'
   };
   const hdrEl=document.querySelector('#stu-drawer .dr-hdr');
   hdrEl.style.background=hdrColors[mor]||hdrColors.inactiva;
@@ -2757,55 +2757,44 @@ function renderDrawerChart(s){
   const container=document.getElementById('dr-hist-chart');
   const historial=s.historial||[];
   if(!s.fechaInicio&&!historial.length){
-    container.innerHTML='<div style="color:var(--gray-400);font-size:13px;padding:8px 0">Sin registros. Usa "+ Registrar mes" para agregar.</div>';return;
+    container.innerHTML='<div style="color:#94a3b8;font-size:13px;padding:8px 0">Sin registros. Usa "+ Registrar mes" para agregar.</div>';return;
   }
   const start=s.fechaInicio?new Date(s.fechaInicio+'-01'):new Date('2025-04-01');
   const now=new Date();
   const months=[];
-  let d=new Date(start);
+  let d=new Date(start.getTime());
   while(d<=now){months.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`);d.setMonth(d.getMonth()+1);}
   const pmap={};historial.forEach(h=>pmap[h.mes]=h);
-  const planBadge={
-    plan12:`<span style="background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">Plan 12</span>`,
-    plan8:`<span style="background:#dbeafe;color:#1e40af;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">Plan 8</span>`,
-    plan4:`<span style="background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">Plan 4</span>`,
-    suelta:`<span style="background:#fef9c3;color:#854d0e;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">Suelta</span>`,
-    inactivo:`<span style="background:#f1f5f9;color:#94a3b8;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">Inactivo</span>`,
-  };
   const MN2=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  const rows=months.map(m=>{
+  // Estilos por plan
+  const planStyle={
+    plan12:{bg:'#dcfce7',border:'#86efac',color:'#15803d',lbl:'Plan 12'},
+    plan8: {bg:'#dbeafe',border:'#93c5fd',color:'#1d4ed8',lbl:'Plan 8'},
+    plan4: {bg:'#e0f2fe',border:'#7dd3fc',color:'#0369a1',lbl:'Plan 4'},
+    suelta:{bg:'#fef9c3',border:'#fde047',color:'#854d0e',lbl:'Suelta'},
+    inactivo:{bg:'#f1f5f9',border:'#e2e8f0',color:'#94a3b8',lbl:'Inactivo'},
+  };
+  const blocks=months.map(m=>{
     const [y,mo]=m.split('-');
-    const lbl=MN2[parseInt(mo)-1]+' '+y.slice(2);
+    const lbl=MN2[parseInt(mo)-1]+'<br><span style="font-weight:500;opacity:.75">\''+y.slice(2)+'</span>';
     const e=pmap[m];
     if(!e){
-      return`<tr style="border-top:1px solid #f1f5f9">
-        <td style="padding:7px 4px;font-size:12px;font-weight:600;color:#94a3b8">${lbl}</td>
-        <td><span style="background:#f8fafc;color:#cbd5e1;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;border:1px dashed #e2e8f0">Sin registro</span></td>
-        <td style="text-align:right;color:#94a3b8;font-size:12px">—</td>
-        <td style="text-align:right;color:#94a3b8;font-size:11px">—</td>
-        <td style="text-align:right"><button onclick="editHistEntry('${m}')" style="background:none;border:none;cursor:pointer;color:#0369a1;font-size:11px;font-weight:700;padding:3px 6px;border-radius:5px;background:#eff6ff">+ Agregar</button></td>
-      </tr>`;
+      return`<div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0">
+        <div onclick="editHistEntry('${m}')" style="width:52px;height:52px;border:2px dashed #e2e8f0;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#cbd5e1;font-size:20px;transition:all .15s" onmouseover="this.style.borderColor='#0369a1';this.style.color='#0369a1'" onmouseout="this.style.borderColor='#e2e8f0';this.style.color='#cbd5e1'">+</div>
+        <div style="font-size:9px;font-weight:700;color:#cbd5e1;text-align:center;line-height:1.3">${lbl}</div>
+      </div>`;
     }
-    const fmt=n=>n?'$'+Math.round(n/1000)+'k':'—';
-    const fp=e.fechaPago?new Date(e.fechaPago+'T12:00:00').toLocaleDateString('es-CL',{day:'numeric',month:'short'}):'—';
-    return`<tr style="border-top:1px solid #f1f5f9">
-      <td style="padding:7px 4px;font-size:12px;font-weight:700;color:#0c2340">${lbl}</td>
-      <td>${planBadge[e.pack]||planBadge.inactivo}</td>
-      <td style="text-align:right;font-size:12px;font-weight:700;color:#10b981">${fmt(e.monto)}</td>
-      <td style="text-align:right;font-size:11px;color:#64748b">${fp}</td>
-      <td style="text-align:right"><button onclick="editHistEntry('${m}')" style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:12px;padding:2px 5px" title="Editar">✏️</button></td>
-    </tr>`;
-  }).reverse().join(''); // más reciente primero
-  container.innerHTML=`<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse">
-    <thead><tr style="color:#94a3b8;font-size:9px;text-transform:uppercase;letter-spacing:.5px">
-      <th style="text-align:left;padding:0 4px 6px;font-weight:700">Mes</th>
-      <th style="text-align:left;padding:0 4px 6px;font-weight:700">Plan</th>
-      <th style="text-align:right;padding:0 4px 6px;font-weight:700">Monto</th>
-      <th style="text-align:right;padding:0 4px 6px;font-weight:700">Fecha pago</th>
-      <th style="width:60px"></th>
-    </tr></thead>
-    <tbody>${rows}</tbody>
-  </table></div>`;
+    const ps=planStyle[e.pack]||planStyle.inactivo;
+    const fmt=e.monto?'$'+Math.round(e.monto/1000)+'k':'';
+    return`<div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0">
+      <div onclick="editHistEntry('${m}')" title="${ps.lbl}${fmt?' · '+fmt:''}" style="width:52px;height:52px;background:${ps.bg};border:2px solid ${ps.border};border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:2px;transition:transform .15s;box-shadow:0 1px 3px rgba(0,0,0,.06)" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        <div style="font-size:9px;font-weight:800;color:${ps.color}">${ps.lbl.replace('Plan ','P')}</div>
+        ${fmt?`<div style="font-size:9px;font-weight:700;color:${ps.color};opacity:.85">${fmt}</div>`:''}
+      </div>
+      <div style="font-size:9px;font-weight:700;color:#64748b;text-align:center;line-height:1.3">${lbl}</div>
+    </div>`;
+  });
+  container.innerHTML=`<div style="overflow-x:auto;padding-bottom:4px"><div style="display:flex;gap:6px;padding:4px 2px 2px;min-width:max-content">${blocks.join('')}</div></div>`;
 }
 function openAddHist(){
   const now=new Date();
