@@ -52,7 +52,7 @@ section{padding:88px 24px}
 .section-sub{font-size:17px;color:var(--gray-500);max-width:540px}
 
 /* HERO LOGO */
-.hero-logo-corner{position:absolute;bottom:90px;right:52px;width:88px;height:88px;object-fit:contain;mix-blend-mode:screen;filter:brightness(1.2) contrast(1.05);opacity:.85;z-index:2}
+.hero-logo-corner{position:absolute;bottom:90px;right:52px;width:88px;height:88px;object-fit:contain;filter:brightness(0) invert(1);opacity:.85;z-index:2}
 /* BENEFICIOS */
 #beneficios{background:var(--white)}
 .benefits-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:40px}
@@ -125,11 +125,15 @@ textarea.form-control{resize:vertical;min-height:110px}
 .sb-header{padding:28px 24px;border-bottom:1px solid rgba(255,255,255,.08)}
 .sb-logo{color:white;font-size:16px;font-weight:700}
 .sb-role{color:var(--gray-400);font-size:12px;margin-top:4px}
-.sb-nav{flex:1;padding:16px 0;overflow-y:auto}
+.sb-nav{flex:1;padding:16px 0;overflow-y:auto;scrollbar-width:none}
+.sb-nav::-webkit-scrollbar{display:none}
 .nav-item{display:flex;align-items:center;gap:12px;padding:12px 24px;color:var(--gray-400);cursor:pointer;transition:all var(--t);font-size:14px;font-weight:500;border-left:3px solid transparent;border:none;background:none;width:100%;text-align:left;font-family:inherit}
 .nav-item:hover{color:white;background:rgba(255,255,255,.05)}
-.nav-item.active{color:white;border-left:3px solid var(--blue)!important;background:rgba(14,165,233,.1)}
+.nav-item.active{color:white;border-left:4px solid white!important;background:transparent}
 .nav-item .ic{font-size:17px;width:22px;text-align:center}
+.nav-ic{width:22px;height:22px;object-fit:contain;filter:brightness(0) invert(1);opacity:.35;transition:all var(--t);flex-shrink:0}
+.nav-item:hover .nav-ic{opacity:.7}
+.nav-item.active .nav-ic{opacity:1;filter:brightness(0) saturate(100%) invert(62%) sepia(85%) saturate(700%) hue-rotate(175deg) brightness(110%)}
 .sb-footer{padding:20px 24px;border-top:1px solid rgba(255,255,255,.08)}
 .nav-category{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.28);padding:14px 24px 5px;pointer-events:none}
 .nav-sep{height:1px;background:rgba(255,255,255,.07);margin:6px 16px}
@@ -617,7 +621,7 @@ tr:hover td{background:var(--blue-bg)}
 
 <nav class="nav">
   <div class="nav-logo" style="display:flex;align-items:center;gap:10px">
-    <img src="logo-mea.png" alt="Movimiento en Agua" style="height:40px;width:40px;object-fit:contain;filter:brightness(0) saturate(100%) invert(21%) sepia(97%) saturate(1500%) hue-rotate(188deg) brightness(90%)">
+    <img src="logo-mea.png" alt="Movimiento en Agua" style="height:40px;width:40px;object-fit:contain;filter:brightness(0) invert(1)">
     <span style="font-size:16px;font-weight:800;color:var(--blue-dark)">Movimiento en Agua</span>
   </div>
   <div class="nav-links">
@@ -873,25 +877,25 @@ tr:hover td{background:var(--blue-bg)}
         </div>
       </div>
       <nav class="sb-nav">
-        <button class="nav-item active" onclick="adminTab('dash')" id="tab-dash"><span class="ic">📊</span><span>Inicio</span></button>
+        <button class="nav-item active" onclick="adminTab('dash')" id="tab-dash"><img src="logo-mea.png" class="ic nav-ic"><span>Inicio</span></button>
 
         <div class="nav-sep"></div>
         <div class="nav-category">Alumnas</div>
-        <button class="nav-item" onclick="adminTab('students')" id="tab-students"><span class="ic">👩</span><span>Alumnas</span></button>
+        <button class="nav-item" onclick="adminTab('students')" id="tab-students"><img src="logo-mea.png" class="ic nav-ic"><span>Alumnas</span></button>
 
         <div class="nav-sep"></div>
         <div class="nav-category">Clases</div>
-        <button class="nav-item" onclick="adminTab('clases')" id="tab-clases"><span class="ic">🏊</span><span>Clases</span></button>
-        <button class="nav-item" onclick="adminTab('planificacion')" id="tab-planificacion"><span class="ic">🧠</span><span>Planificación</span></button>
+        <button class="nav-item" onclick="adminTab('clases')" id="tab-clases"><img src="logo-mea.png" class="ic nav-ic"><span>Clases</span></button>
+        <button class="nav-item" onclick="adminTab('planificacion')" id="tab-planificacion"><img src="logo-mea.png" class="ic nav-ic"><span>Planificación</span></button>
 
         <div class="nav-sep"></div>
         <div class="nav-category">Finanzas</div>
-        <button class="nav-item" onclick="adminTab('finanzas')" id="tab-finanzas"><span class="ic">💰</span><span>Finanzas</span></button>
+        <button class="nav-item" onclick="adminTab('finanzas')" id="tab-finanzas"><img src="logo-mea.png" class="ic nav-ic"><span>Finanzas</span></button>
 
         <div class="nav-sep"></div>
         <div class="nav-category">Productividad</div>
-        <button class="nav-item" onclick="adminTab('docs')" id="tab-docs"><span class="ic">📄</span><span>Documentos</span></button>
-        <button class="nav-item" onclick="adminTab('profile')" id="tab-profile"><span class="ic">✏️</span><span>Mi perfil</span></button>
+        <button class="nav-item" onclick="adminTab('docs')" id="tab-docs"><img src="logo-mea.png" class="ic nav-ic"><span>Documentos</span></button>
+        <button class="nav-item" onclick="adminTab('profile')" id="tab-profile"><img src="logo-mea.png" class="ic nav-ic"><span>Mi perfil</span></button>
 
         <div class="nav-sep" style="margin-top:auto"></div>
         <button class="nav-projects-toggle" onclick="toggleProjects(this)">
@@ -899,7 +903,7 @@ tr:hover td{background:var(--blue-bg)}
           <span class="toggle-arrow">▶</span>
         </button>
         <div class="nav-projects-items" id="nav-projects">
-          <button class="nav-item" onclick="adminTab('abeja')" id="tab-abeja"><span class="ic">🐝</span><span>Capital Abeja</span></button>
+          <button class="nav-item" onclick="adminTab('abeja')" id="tab-abeja"><img src="logo-mea.png" class="ic nav-ic"><span>Capital Abeja</span></button>
         </div>
       </nav>
       <div class="sb-footer">
@@ -1620,6 +1624,27 @@ tr:hover td{background:var(--blue-bg)}
     <div class="modal-acts">
       <button class="btn btn-ghost" onclick="closeM('m-vid')">Cancelar</button>
       <button class="btn btn-primary" onclick="saveVid()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: agregar alumna a finanzas -->
+<div id="m-fin-alumna" class="modal-overlay hidden">
+  <div class="modal" style="max-width:440px">
+    <h3>Agregar alumna al mes</h3>
+    <div class="form-group" style="margin-bottom:12px">
+      <input type="text" id="fin-alumna-search" class="form-control" placeholder="Buscar alumna..." oninput="finFiltrarAlumnas(this.value)" autocomplete="off" style="margin-bottom:10px">
+      <div id="fin-alumna-lista" style="max-height:240px;overflow-y:auto;border:1px solid #e2e8f0;border-radius:10px;background:#fafafa"></div>
+    </div>
+    <div style="border-top:1px solid #e2e8f0;padding-top:14px;margin-top:4px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:#94a3b8;text-transform:uppercase;margin-bottom:10px">O agregar manualmente</div>
+      <div style="display:flex;gap:8px">
+        <input type="text" id="fin-alumna-manual" class="form-control" placeholder="Nombre de la alumna" style="flex:1">
+        <button class="btn btn-primary btn-sm" onclick="finConfirmarManual()">Agregar</button>
+      </div>
+    </div>
+    <div class="modal-acts">
+      <button class="btn btn-ghost" onclick="closeM('m-fin-alumna')">Cancelar</button>
     </div>
   </div>
 </div>
@@ -3563,11 +3588,51 @@ function finCargarExcel(){
   renderFinanzas();
 }
 function finAgregarAlumna(){
-  const nom=prompt('Nombre de la alumna:');if(!nom||!nom.trim())return;
+  document.getElementById('fin-alumna-search').value='';
+  document.getElementById('fin-alumna-manual').value='';
+  finFiltrarAlumnas('');
+  document.getElementById('m-fin-alumna').classList.remove('hidden');
+  setTimeout(()=>document.getElementById('fin-alumna-search').focus(),100);
+}
+function finFiltrarAlumnas(q){
+  const mk=finGetMesKey();
+  const yaEnMes=new Set((finGetPagos(mk)||[]).map(p=>p.nom.toLowerCase()));
+  const lista=students
+    .filter(s=>!yaEnMes.has(s.nom.toLowerCase()))
+    .filter(s=>!q||s.nom.toLowerCase().includes(q.toLowerCase()));
+  const el=document.getElementById('fin-alumna-lista');
+  if(!lista.length){
+    el.innerHTML='<div style="padding:16px;text-align:center;color:#94a3b8;font-size:13px">Sin resultados</div>';
+    return;
+  }
+  el.innerHTML=lista.map(s=>{
+    const planLabel=s.plan||'';
+    return`<button onclick="finSeleccionarAlumna('${esc(s.nom)}')" style="display:flex;align-items:center;gap:10px;width:100%;padding:10px 14px;background:none;border:none;border-bottom:1px solid #f1f5f9;cursor:pointer;text-align:left;transition:background .15s" onmouseover="this.style.background='#eff6ff'" onmouseout="this.style.background='none'">
+      <div style="width:32px;height:32px;border-radius:50%;background:#0369a1;color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">${ini(s.nom)}</div>
+      <div><div style="font-size:14px;font-weight:600;color:#0c2340">${esc(s.nom)}</div><div style="font-size:11px;color:#94a3b8">${esc(planLabel)}</div></div>
+    </button>`;
+  }).join('');
+}
+function finSeleccionarAlumna(nom){
+  const mk=finGetMesKey();
+  const stu=students.find(s=>s.nom===nom);
+  const planKey=stu&&stu.planActivo?stu.planActivo.pack:'plan4';
+  const monto=FIN_PLANES[planKey]?FIN_PLANES[planKey].monto:50000;
+  let pagos=finGetPagos(mk)||[];
+  pagos.push({nom,plan:planKey,monto,pagado:false});
+  finSavePagos(mk,pagos);
+  closeM('m-fin-alumna');
+  renderFinanzas();
+}
+function finConfirmarManual(){
+  const nom=document.getElementById('fin-alumna-manual').value.trim();
+  if(!nom)return;
   const mk=finGetMesKey();
   let pagos=finGetPagos(mk)||[];
-  pagos.push({nom:nom.trim(),plan:'plan4',monto:50000,pagado:false});
-  finSavePagos(mk,pagos);renderFinanzas();
+  pagos.push({nom,plan:'plan4',monto:50000,pagado:false});
+  finSavePagos(mk,pagos);
+  closeM('m-fin-alumna');
+  renderFinanzas();
 }
 function finTogglePago(idx){
   const mk=finGetMesKey();const pagos=finGetPagos(mk)||[];

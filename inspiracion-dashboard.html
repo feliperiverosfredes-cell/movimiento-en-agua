@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inspiración Dashboard · Movimiento en Agua</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f4f8;color:#1e293b}
+
+  /* Layout */
+  .layout{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+  .sidebar{background:#0c2340;padding:24px 0;display:flex;flex-direction:column;gap:2px;position:sticky;top:0;height:100vh;overflow-y:auto}
+  .sb-brand{padding:0 20px 22px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:10px}
+  .sb-logo{width:42px;height:42px;background:linear-gradient(135deg,#0369a1,#38bdf8);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
+  .sb-brand-name{color:white;font-weight:700;font-size:14px;margin-top:10px;line-height:1.2}
+  .sb-brand-sub{color:#475569;font-size:11px;margin-top:3px}
+  .sb-section{padding:14px 20px 6px;font-size:9px;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:1px}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;color:#64748b;font-size:13px;font-weight:500;cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:all .15s;border-left:3px solid transparent}
+  .nav-item:hover{background:rgba(255,255,255,.05);color:#cbd5e1}
+  .nav-item.active{background:rgba(56,189,248,.08);color:#38bdf8;border-left-color:#38bdf8}
+  .nav-item .ic{font-size:15px;width:20px;text-align:center}
+  .nav-badge{margin-left:auto;background:#ef4444;color:white;font-size:9px;font-weight:700;padding:2px 5px;border-radius:20px;min-width:18px;text-align:center}
+  .nav-badge-warn{background:#f59e0b}
+  .main{padding:28px 32px;overflow-y:auto;max-width:1200px}
+
+  /* Header */
+  .pg-header{margin-bottom:22px;display:flex;align-items:center;justify-content:space-between}
+  .pg-header h1{font-size:22px;font-weight:800;color:#0c2340}
+  .pg-header p{color:#64748b;font-size:13px;margin-top:3px}
+  .hdr-actions{display:flex;gap:8px}
+
+  /* Alerts */
+  .alerts-row{display:flex;flex-direction:column;gap:7px;margin-bottom:20px}
+  .alert-pill{display:flex;align-items:center;gap:12px;padding:11px 15px;border-radius:11px;font-size:13px;font-weight:500}
+  .alert-danger{background:#fef2f2;border:1px solid #fecaca;color:#b91c1c}
+  .alert-warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+  .alert-success{background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d}
+  .alert-info{background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8}
+  .alert-pill .icon{font-size:15px;flex-shrink:0}
+  .alert-pill strong{font-weight:700}
+  .alert-pill a{margin-left:auto;font-size:11px;font-weight:700;color:inherit;text-decoration:underline;cursor:pointer;white-space:nowrap;flex-shrink:0}
+
+  /* KPIs */
+  .kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px}
+  .kpi{background:white;border-radius:14px;padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,.06);position:relative;overflow:hidden;cursor:pointer;transition:transform .15s,box-shadow .15s}
+  .kpi:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+  .kpi-icon{font-size:20px;margin-bottom:8px}
+  .kpi-num{font-size:26px;font-weight:800;color:#0c2340;line-height:1}
+  .kpi-lbl{font-size:11px;color:#64748b;margin-top:5px;font-weight:500}
+  .kpi-trend{font-size:10px;font-weight:700;margin-top:7px;display:flex;align-items:center;gap:3px}
+  .trend-up{color:#10b981}.trend-down{color:#ef4444}.trend-neutral{color:#94a3b8}
+  .kpi-bar{position:absolute;bottom:0;left:0;right:0;height:3px}
+
+  /* Grids */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-bottom:18px}
+  .grid-32{display:grid;grid-template-columns:1.6fr 1fr;gap:18px;margin-bottom:18px}
+  .grid-23{display:grid;grid-template-columns:1fr 1.6fr;gap:18px;margin-bottom:18px}
+
+  /* Card */
+  .card{background:white;border-radius:14px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  .card-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:8px}
+  .card-title{font-size:13px;font-weight:700;color:#0c2340;display:flex;align-items:center;gap:6px}
+  .card-sub{font-size:11px;color:#94a3b8;margin-top:3px}
+  .btn-sm{padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;border:none;cursor:pointer;transition:all .15s}
+  .btn-primary{background:#0369a1;color:white}
+  .btn-primary:hover{background:#0284c7}
+  .btn-ghost{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0}
+  .btn-ghost:hover{background:#e2e8f0}
+  .btn-green{background:#10b981;color:white}
+  .btn-red{background:#ef4444;color:white}
+  .btn-warn{background:#f59e0b;color:white}
+
+  /* Source tag */
+  .source-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;background:#f1f5f9;color:#64748b;text-transform:uppercase;letter-spacing:.4px}
+
+  /* Badges */
+  .badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:700}
+  .badge-gold{background:#fef9c3;color:#854d0e;border:1px solid #fde68a}
+  .badge-blue{background:#dbeafe;color:#1d4ed8;border:1px solid #bfdbfe}
+  .badge-green{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0}
+  .badge-red{background:#fee2e2;color:#b91c1c;border:1px solid #fecaca}
+  .badge-warn{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+  .badge-gray{background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0}
+  .badge-purple{background:#f3e8ff;color:#7e22ce;border:1px solid #e9d5ff}
+
+  /* Students */
+  .stu-list{display:flex;flex-direction:column;gap:8px}
+  .stu-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;border:1px solid #f1f5f9;transition:all .15s;cursor:pointer}
+  .stu-row:hover{background:#f8fafc;border-color:#e2e8f0}
+  .stu-row.risk{background:#fff7ed;border-color:#fed7aa}
+  .stu-row.morosa{background:#fef2f2;border-color:#fecaca}
+  .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0369a1,#38bdf8);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:12px;flex-shrink:0}
+  .stu-info{flex:1;min-width:0}
+  .stu-name{font-weight:700;font-size:12px;color:#0c2340;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+  .stu-meta{font-size:10px;color:#94a3b8;margin-top:2px}
+  .stu-num{font-size:14px;font-weight:800;color:#0c2340;text-align:right}
+  .stu-lbl{font-size:9px;color:#94a3b8;text-align:right;white-space:nowrap}
+  .prog-wrap{width:50px;height:5px;background:#e2e8f0;border-radius:99px;overflow:hidden}
+  .prog-fill{height:100%;border-radius:99px}
+
+  /* Exercise library */
+  .ex-cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .ex-cat{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid #e2e8f0;background:white;color:#64748b;transition:all .15s}
+  .ex-cat.active,.ex-cat:hover{background:#0369a1;color:white;border-color:#0369a1}
+  .ex-grid{display:flex;flex-wrap:wrap;gap:6px}
+  .ex-chip{display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:8px;border:1.5px solid #e2e8f0;background:white;font-size:11px;font-weight:500;color:#334155;cursor:pointer;transition:all .15s}
+  .ex-chip:hover{border-color:#0369a1;color:#0369a1;background:#f0f9ff}
+  .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+  .dot-warm{background:#f59e0b}.dot-cardio{background:#ef4444}.dot-strength{background:#3b82f6}.dot-flex{background:#10b981}.dot-cool{background:#8b5cf6}
+
+  /* Weekly calendar — Mindbody */
+  .week-grid{display:flex;flex-direction:column;gap:6px}
+  .week-day{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;border:1px solid #f1f5f9}
+  .week-day.today{background:#eff6ff;border-color:#bfdbfe}
+  .week-day-label{font-size:11px;font-weight:700;color:#64748b;width:28px;text-align:center;flex-shrink:0}
+  .week-day.today .week-day-label{color:#1d4ed8}
+  .week-slots{display:flex;gap:6px;flex:1;flex-wrap:wrap}
+  .wk-slot{display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:7px;background:#f0f9ff;border:1px solid #bae6fd;cursor:pointer;transition:all .15s;position:relative}
+  .wk-slot:hover{background:#e0f2fe}
+  .wk-slot.full{background:#fef2f2;border-color:#fecaca}
+  .wk-slot.almost{background:#fffbeb;border-color:#fde68a}
+  .wk-time{font-size:10px;font-weight:800;color:#0369a1}
+  .wk-slot.full .wk-time{color:#b91c1c}
+  .wk-slot.almost .wk-time{color:#92400e}
+  .wk-cap{font-size:9px;color:#64748b;white-space:nowrap}
+  .wk-bar{position:absolute;bottom:0;left:0;border-radius:0 0 6px 6px;height:2px;background:#38bdf8}
+  .week-rest{font-size:11px;color:#94a3b8;font-style:italic;padding:4px 8px}
+
+  /* Membership distribution — Glofox */
+  .plan-dist{display:flex;flex-direction:column;gap:10px}
+  .plan-row{display:flex;align-items:center;gap:10px}
+  .plan-color{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+  .plan-name{font-size:12px;font-weight:600;color:#334155;flex:1}
+  .plan-bar-wrap{flex:2;height:8px;background:#f1f5f9;border-radius:99px;overflow:hidden}
+  .plan-bar-fill{height:100%;border-radius:99px;transition:width .5s}
+  .plan-count{font-size:12px;font-weight:700;color:#0c2340;min-width:24px;text-align:right}
+  .plan-pct{font-size:10px;color:#94a3b8;min-width:28px;text-align:right}
+  .donut-wrap{display:flex;justify-content:center;align-items:center;margin-bottom:16px}
+  .donut{width:90px;height:90px;border-radius:50%;background:conic-gradient(#0369a1 0% 45%, #38bdf8 45% 75%, #10b981 75% 88%, #f59e0b 88% 100%);display:flex;align-items:center;justify-content:center;position:relative}
+  .donut::after{content:'57';position:absolute;width:58px;height:58px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#0c2340}
+  .donut-label{font-size:9px;color:#64748b;text-align:center;margin-top:6px}
+
+  /* Retention funnel — Glofox */
+  .funnel{display:flex;flex-direction:column;gap:6px;align-items:center}
+  .funnel-step{border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:9px 16px;font-size:12px;font-weight:600;position:relative;transition:all .2s;cursor:pointer}
+  .funnel-step:hover{filter:brightness(0.95)}
+  .funnel-n{font-size:18px;font-weight:800}
+  .funnel-pct{font-size:10px;opacity:.7;margin-left:8px}
+  .f-new{background:#dbeafe;color:#1e40af;width:100%}
+  .f-active{background:#dcfce7;color:#166534;width:88%}
+  .f-risk{background:#fef3c7;color:#92400e;width:60%}
+  .f-churn{background:#fee2e2;color:#991b1b;width:25%}
+  .funnel-arrow{font-size:12px;color:#94a3b8;margin:-2px 0}
+
+  /* Leaderboard — Trainerize */
+  .leaderboard{display:flex;flex-direction:column;gap:6px}
+  .lb-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;transition:background .15s;cursor:pointer}
+  .lb-row:hover{background:#f8fafc}
+  .lb-rank{font-size:14px;font-weight:800;width:24px;text-align:center;color:#94a3b8}
+  .lb-rank.gold{color:#f59e0b}.lb-rank.silver{color:#94a3b8}.lb-rank.bronze{color:#cd7c2c}
+  .lb-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:11px;font-weight:700;flex-shrink:0}
+  .lb-name{flex:1;font-size:12px;font-weight:600;color:#0c2340}
+  .lb-score{font-size:13px;font-weight:800;color:#0369a1}
+  .lb-sub{font-size:10px;color:#94a3b8;margin-top:1px}
+  .lb-fire{font-size:12px}
+
+  /* Quick messages — PushPress */
+  .msg-list{display:flex;flex-direction:column;gap:8px}
+  .msg-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid #f1f5f9;background:#f8fafc}
+  .msg-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#ef4444,#f87171);display:flex;align-items:center;justify-content:center;color:white;font-size:11px;font-weight:700;flex-shrink:0}
+  .msg-info{flex:1;min-width:0}
+  .msg-name{font-size:12px;font-weight:700;color:#0c2340}
+  .msg-reason{font-size:10px;color:#94a3b8}
+  .msg-days{font-size:10px;font-weight:700;color:#b91c1c}
+  .msg-actions{display:flex;gap:5px;flex-shrink:0}
+  .msg-btn{padding:4px 9px;border-radius:6px;font-size:10px;font-weight:700;border:none;cursor:pointer;display:flex;align-items:center;gap:4px}
+  .msg-btn-wa{background:#dcfce7;color:#15803d}
+  .msg-btn-wa:hover{background:#bbf7d0}
+  .msg-btn-note{background:#f1f5f9;color:#64748b}
+
+  /* Today's plan */
+  .plan-clase{display:flex;flex-direction:column;gap:8px}
+  .plan-slot{display:flex;align-items:flex-start;gap:12px;padding:12px;border-radius:10px;border:1.5px solid #e2e8f0;transition:border-color .15s}
+  .plan-slot:hover{border-color:#bae6fd}
+  .plan-slot.today{border-color:#0369a1;background:#f0f9ff}
+  .plan-time{font-size:12px;font-weight:800;color:#0369a1;min-width:42px;text-align:center;margin-top:2px}
+  .plan-date{font-size:9px;color:#94a3b8;font-weight:500;text-align:center}
+  .plan-content{flex:1}
+  .plan-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+  .plan-tag{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600}
+  .tag-warm{background:#fef9c3;color:#92400e}
+  .tag-cardio{background:#fee2e2;color:#b91c1c}
+  .tag-force{background:#dbeafe;color:#1e40af}
+  .tag-flex{background:#dcfce7;color:#15803d}
+  .plan-inscritas{display:flex;margin-top:8px;gap:3px;align-items:center}
+  .mini-av{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#0369a1,#38bdf8);display:flex;align-items:center;justify-content:center;color:white;font-size:8px;font-weight:700;border:2px solid white;margin-left:-5px}
+  .mini-av:first-child{margin-left:0}
+  .mini-count{font-size:10px;color:#64748b;margin-left:5px}
+
+  /* Revenue chart */
+  .chart-bars{display:flex;align-items:flex-end;gap:7px;height:72px;padding-top:8px}
+  .bar-col{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1}
+  .bar{width:100%;border-radius:5px 5px 0 0;background:linear-gradient(to top,#0369a1,#38bdf8);transition:height .3s;cursor:pointer}
+  .bar:hover{opacity:.85}
+  .bar-lbl{font-size:9px;color:#94a3b8;font-weight:600}
+  .bar-val{font-size:9px;color:#0c2340;font-weight:700}
+
+  /* Estado de resultados — Mindbody */
+  .er-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px}
+  .er-box{border-radius:12px;padding:16px}
+  .er-box-ing{background:#f0fdf4;border:1px solid #bbf7d0}
+  .er-box-gas{background:#fef2f2;border:1px solid #fecaca}
+  .er-box-net{background:#eff6ff;border:1px solid #bfdbfe}
+  .er-label{font-size:11px;font-weight:600;color:#64748b;margin-bottom:8px}
+  .er-amount{font-size:22px;font-weight:800}
+  .er-ing .er-amount{color:#15803d}.er-gas .er-amount{color:#b91c1c}.er-net .er-amount{color:#1d4ed8}
+  .er-rows{display:flex;flex-direction:column;gap:6px}
+  .er-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #f1f5f9}
+  .er-row:last-child{border-bottom:none}
+  .er-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .er-row-name{flex:1;font-size:12px;color:#334155}
+  .er-row-val{font-size:12px;font-weight:700;color:#0c2340}
+  .er-row-pct{font-size:10px;color:#94a3b8;min-width:34px;text-align:right}
+
+  /* Attendance calendar */
+  .asist-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:10px}
+  .asist-day{text-align:center}
+  .asist-label{font-size:9px;color:#94a3b8;font-weight:600;margin-bottom:4px}
+  .asist-dot{width:26px;height:26px;border-radius:7px;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600}
+  .asist-si{background:#dbeafe;color:#1d4ed8}
+  .asist-no{background:#f1f5f9;color:#94a3b8}
+  .asist-hoy{background:#0369a1;color:white}
+  .asist-fut{background:#f8fafc;color:#e2e8f0}
+
+  /* Heatmap — Glofox class occupancy */
+  .heat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+  .heat-cell{border-radius:8px;padding:8px 6px;text-align:center;cursor:pointer;transition:transform .15s}
+  .heat-cell:hover{transform:scale(1.05)}
+  .heat-label{font-size:9px;font-weight:700;color:rgba(0,0,0,.5);margin-bottom:3px}
+  .heat-time{font-size:10px;font-weight:700}
+  .heat-pct{font-size:12px;font-weight:800}
+  .heat-0{background:#dbeafe;color:#1e40af}
+  .heat-1{background:#bfdbfe;color:#1e40af}
+  .heat-2{background:#7dd3fc;color:#0c4a6e}
+  .heat-3{background:#f59e0b;color:#78350f}
+  .heat-4{background:#ef4444;color:white}
+
+  /* Task list — PushPress */
+  .task-list{display:flex;flex-direction:column;gap:6px}
+  .task-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:9px;border:1px solid #f1f5f9;cursor:pointer;transition:all .15s}
+  .task-item:hover{background:#f8fafc}
+  .task-item.done{opacity:.5}
+  .task-check{width:18px;height:18px;border-radius:5px;border:2px solid #e2e8f0;display:flex;align-items:center;justify-content:center;font-size:10px;color:#10b981;flex-shrink:0}
+  .task-item.done .task-check{background:#dcfce7;border-color:#bbf7d0}
+  .task-text{flex:1;font-size:12px;color:#334155}
+  .task-item.done .task-text{text-decoration:line-through;color:#94a3b8}
+  .task-tag{padding:2px 7px;border-radius:20px;font-size:9px;font-weight:700}
+  .tag-urgente{background:#fee2e2;color:#b91c1c}
+  .tag-hoy{background:#fffbeb;color:#92400e}
+  .tag-semana{background:#f0fdf4;color:#15803d}
+  .tag-admin{background:#f3e8ff;color:#7e22ce}
+
+  /* Progress ring (for student compliance) */
+  .ring-wrap{display:flex;align-items:center;justify-content:center;margin-bottom:12px;gap:16px}
+  .ring-item{display:flex;flex-direction:column;align-items:center;gap:4px}
+  .ring{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#0c2340;position:relative}
+  .ring-label{font-size:10px;color:#64748b;text-align:center;max-width:60px}
+
+  /* Footer */
+  .footer-insp{text-align:center;padding:24px 20px;color:#94a3b8;font-size:11px;border-top:1px solid #e2e8f0;margin-top:4px}
+
+  @media(max-width:1100px){
+    .kpi-grid{grid-template-columns:repeat(3,1fr)}
+    .grid-2,.grid-3,.grid-32,.grid-23{grid-template-columns:1fr}
+    .er-grid{grid-template-columns:1fr}
+    .heat-grid{grid-template-columns:repeat(3,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-brand">
+      <div class="sb-logo">🌊</div>
+      <div class="sb-brand-name">Movimiento en Agua</div>
+      <div class="sb-brand-sub">Panel de instructora</div>
+    </div>
+
+    <div class="sb-section">Inicio</div>
+    <button class="nav-item active"><span class="ic">📊</span> Dashboard</button>
+    <button class="nav-item"><span class="ic">🔔</span> Alertas <span class="nav-badge">4</span></button>
+
+    <div class="sb-section">Alumnos</div>
+    <button class="nav-item"><span class="ic">👥</span> Todos los alumnos</button>
+    <button class="nav-item"><span class="ic">⚠️</span> En riesgo <span class="nav-badge">3</span></button>
+    <button class="nav-item"><span class="ic">🏅</span> Hitos</button>
+
+    <div class="sb-section">Clases</div>
+    <button class="nav-item"><span class="ic">🏊</span> Vista semanal</button>
+    <button class="nav-item"><span class="ic">🧠</span> Planificación</button>
+    <button class="nav-item"><span class="ic">📅</span> Horarios</button>
+
+    <div class="sb-section">Finanzas</div>
+    <button class="nav-item"><span class="ic">💰</span> Estado de resultados</button>
+    <button class="nav-item"><span class="ic">📈</span> Métricas</button>
+
+    <div class="sb-section">Más</div>
+    <button class="nav-item"><span class="ic">💬</span> Mensajes <span class="nav-badge nav-badge-warn">2</span></button>
+    <button class="nav-item"><span class="ic">📄</span> Documentos</button>
+    <button class="nav-item"><span class="ic">✏️</span> Mi perfil</button>
+    <button class="nav-item"><span class="ic">🐝</span> Abeja financiera</button>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HEADER -->
+    <div class="pg-header">
+      <div>
+        <h1>Bienvenida, Martina 👋</h1>
+        <p>Martes 27 de mayo · 8 clases esta semana · 57 alumnos activos</p>
+      </div>
+      <div class="hdr-actions">
+        <button class="btn-sm btn-ghost">📥 Exportar PDF</button>
+        <button class="btn-sm btn-primary">+ Nueva clase</button>
+      </div>
+    </div>
+
+    <!-- ALERTAS — PushPress "at risk + AI alerts" -->
+    <div class="alerts-row">
+      <div class="alert-danger alert-pill">
+        <span class="icon">🔴</span>
+        <div><strong>3 alumnos sin clase hace más de 14 días</strong> — Riesgo de abandono. Escríbeles antes de que se vayan.</div>
+        <a>Escribir ahora →</a>
+      </div>
+      <div class="alert-warn alert-pill">
+        <span class="icon">⏰</span>
+        <div><strong>Clase del jueves 18:00 casi llena</strong> — Solo 2 cupos disponibles de 10.</div>
+        <a>Ver clase →</a>
+      </div>
+      <div class="alert-success alert-pill">
+        <span class="icon">🏅</span>
+        <div><strong>Rosa M. cumple 6 meses activa este mes</strong> — ¡Buen momento para reconocerlo con un mensaje especial!</div>
+        <a>Enviar felicitación →</a>
+      </div>
+      <div class="alert-info alert-pill">
+        <span class="icon">💰</span>
+        <div><strong>2 alumnos con pago pendiente</strong> — Marianella y Felipe aún no han pagado mayo.</div>
+        <a>Ver morosidad →</a>
+      </div>
+    </div>
+
+    <!-- KPIs — Mindbody + Glofox analytics -->
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-icon">👥</div>
+        <div class="kpi-num">57</div>
+        <div class="kpi-lbl">Alumnos totales</div>
+        <div class="kpi-trend trend-up">↑ +8 este mes</div>
+        <div class="kpi-bar" style="background:linear-gradient(90deg,#0369a1,#38bdf8)"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-icon">✅</div>
+        <div class="kpi-num">42</div>
+        <div class="kpi-lbl">Alumnos activos</div>
+        <div class="kpi-trend trend-up">↑ +5 vs abril</div>
+        <div class="kpi-bar" style="background:linear-gradient(90deg,#10b981,#34d399)"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-icon">📈</div>
+        <div class="kpi-num">78%</div>
+        <div class="kpi-lbl">Tasa de asistencia</div>
+        <div class="kpi-trend trend-up">↑ +12% vs mes ant.</div>
+        <div class="kpi-bar" style="background:linear-gradient(90deg,#8b5cf6,#a78bfa)"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-icon">💵</div>
+        <div class="kpi-num">$840K</div>
+        <div class="kpi-lbl">Ingresos mayo</div>
+        <div class="kpi-trend trend-up">↑ +$120K vs abril</div>
+        <div class="kpi-bar" style="background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-icon">🏊</div>
+        <div class="kpi-num">23</div>
+        <div class="kpi-lbl">Clases dadas</div>
+        <div class="kpi-trend trend-neutral">→ 5 clases/semana</div>
+        <div class="kpi-bar" style="background:linear-gradient(90deg,#ef4444,#f87171)"></div>
+      </div>
+    </div>
+
+    <!-- FILA: Alumnos en riesgo + Vista semanal -->
+    <div class="grid-32">
+
+      <!-- VISTA SEMANAL — Mindbody "schedule view" -->
+      <div class="card">
+        <div class="card-hdr">
+          <div>
+            <div class="card-title">Vista semanal <span class="source-tag">Mindbody</span></div>
+            <div class="card-sub">Semana del 26 de mayo al 30 de mayo · Ocupación por clase</div>
+          </div>
+          <button class="btn-sm btn-ghost">Semana siguiente →</button>
+        </div>
+        <div class="week-grid">
+          <div class="week-day">
+            <div class="week-day-label">LUN<br><span style="font-size:9px;font-weight:500">26</span></div>
+            <div class="week-slots">
+              <div class="wk-slot" style="flex:1;position:relative">
+                <div class="wk-bar" style="width:80%"></div>
+                <div>
+                  <div class="wk-time">10:30</div>
+                  <div class="wk-cap">8/10 cupos</div>
+                </div>
+                <span class="badge badge-blue" style="font-size:9px">80%</span>
+              </div>
+              <div class="wk-slot almost" style="flex:1;position:relative">
+                <div class="wk-bar" style="width:90%;background:#f59e0b"></div>
+                <div>
+                  <div class="wk-time">18:00</div>
+                  <div class="wk-cap">9/10 cupos</div>
+                </div>
+                <span class="badge badge-warn" style="font-size:9px">90%</span>
+              </div>
+            </div>
+          </div>
+          <div class="week-day today">
+            <div class="week-day-label">MAR<br><span style="font-size:9px;font-weight:500">27</span></div>
+            <div class="week-slots">
+              <div class="wk-slot" style="flex:1;position:relative">
+                <div class="wk-bar" style="width:60%"></div>
+                <div>
+                  <div class="wk-time">10:30</div>
+                  <div class="wk-cap">6/10 cupos</div>
+                </div>
+                <span class="badge badge-blue" style="font-size:9px">HOY</span>
+              </div>
+              <div class="wk-slot" style="flex:1;position:relative">
+                <div class="wk-bar" style="width:70%"></div>
+                <div>
+                  <div class="wk-time">18:00</div>
+                  <div class="wk-cap">7/10 cupos</div>
+                </div>
+                <span class="badge badge-blue" style="font-size:9px">HOY</span>
+              </div>
+            </div>
+          </div>
+          <div class="week-day">
+            <div class="week-day-label">MIÉ<br><span style="font-size:9px;font-weight:500">28</span></div>
+            <div class="week-slots">
+              <div class="wk-slot full" style="flex:1;position:relative">
+                <div class="wk-bar" style="width:100%;background:#ef4444"></div>
+                <div>
+                  <div class="wk-time">10:30</div>
+                  <div class="wk-cap">10/10</div>
+                </div>
+                <span class="badge badge-red" style="font-size:9px">LLENA</span>
+              </div>
+              <div class="wk-slot" style="flex:1;position:relative">
+                <div class="wk-bar" style="width:50%"></div>
+                <div>
+                  <div class="wk-time">18:00</div>
+                  <div class="wk-cap">5/10 cupos</div>
+                </div>
+                <span class="badge badge-green" style="font-size:9px">50%</span>
+              </div>
+            </div>
+          </div>
+          <div class="week-day">
+            <div class="week-day-label">JUE<br><span style="font-size:9px;font-weight:500">29</span></div>
+            <div class="week-slots">
+              <div class="wk-slot almost" style="flex:1;position:relative">
+                <div class="wk-bar" style="width:80%;background:#f59e0b"></div>
+                <div>
+                  <div class="wk-time">18:00</div>
+                  <div class="wk-cap">8/10 cupos</div>
+                </div>
+                <span class="badge badge-warn" style="font-size:9px">⚡ 2 libres</span>
+              </div>
+            </div>
+          </div>
+          <div class="week-day">
+            <div class="week-day-label">VIE<br><span style="font-size:9px;font-weight:500">30</span></div>
+            <div class="week-slots">
+              <div class="wk-slot" style="flex:1;position:relative">
+                <div class="wk-bar" style="width:40%"></div>
+                <div>
+                  <div class="wk-time">10:30</div>
+                  <div class="wk-cap">4/10 cupos</div>
+                </div>
+                <span class="badge badge-green" style="font-size:9px">40%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ALUMNOS EN RIESGO — PushPress + Trainerize -->
+      <div class="card">
+        <div class="card-hdr">
+          <div>
+            <div class="card-title">Alumnos en riesgo <span class="source-tag">PushPress</span></div>
+            <div class="card-sub">Sin clase hace más de 10 días</div>
+          </div>
+          <button class="btn-sm btn-ghost">Ver todos</button>
+        </div>
+        <div class="stu-list">
+
+          <div class="stu-row risk">
+            <div class="avatar" style="background:linear-gradient(135deg,#ef4444,#f87171)">LP</div>
+            <div class="stu-info">
+              <div class="stu-name">Luisa P. <span class="badge badge-red">⚠️ En riesgo</span></div>
+              <div class="stu-meta">Sin clase hace <strong>18 días</strong> · Plan 4 clases</div>
+            </div>
+            <button class="msg-btn msg-btn-wa">💬 WA</button>
+          </div>
+
+          <div class="stu-row risk">
+            <div class="avatar" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)">MV</div>
+            <div class="stu-info">
+              <div class="stu-name">María V. <span class="badge badge-red">⚠️ En riesgo</span></div>
+              <div class="stu-meta">Sin clase hace <strong>14 días</strong> · Plan 8 clases</div>
+            </div>
+            <button class="msg-btn msg-btn-wa">💬 WA</button>
+          </div>
+
+          <div class="stu-row morosa">
+            <div class="avatar" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">MN</div>
+            <div class="stu-info">
+              <div class="stu-name">Marianella N. <span class="badge badge-red">💰 Morosa</span></div>
+              <div class="stu-meta">Pago mayo pendiente</div>
+            </div>
+            <button class="msg-btn msg-btn-wa">💬 WA</button>
+          </div>
+
+          <div class="stu-row">
+            <div class="avatar" style="background:linear-gradient(135deg,#0369a1,#38bdf8)">RM</div>
+            <div class="stu-info">
+              <div class="stu-name">Rosa M. <span class="badge badge-gold">🏅 6 meses</span></div>
+              <div class="stu-meta">Última clase: hoy · 100% asistencia</div>
+            </div>
+            <div>
+              <div class="stu-num" style="color:#10b981">100%</div>
+              <div class="stu-lbl">asistencia</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FILA: Distribución planes + Leaderboard + Mensajes rápidos -->
+    <div class="grid-3">
+
+      <!-- DISTRIBUCIÓN DE PLANES — Glofox membership breakdown -->
+      <div class="card">
+        <div class="card-hdr">
+          <div>
+            <div class="card-title">Distribución de planes <span class="source-tag">Glofox</span></div>
+            <div class="card-sub">57 alumnos en total</div>
+          </div>
+        </div>
+        <div class="donut-wrap">
+          <div>
+            <div class="donut"></div>
+            <div class="donut-label">alumnos totales</div>
+          </div>
+        </div>
+        <div class="plan-dist">
+          <div class="plan-row">
+            <div class="plan-color" style="background:#0369a1"></div>
+            <div class="plan-name">Plan 4 clases/mes</div>
+            <div class="plan-bar-wrap"><div class="plan-bar-fill" style="width:45%;background:#0369a1"></div></div>
+            <div class="plan-count">26</div>
+            <div class="plan-pct">45%</div>
+          </div>
+          <div class="plan-row">
+            <div class="plan-color" style="background:#38bdf8"></div>
+            <div class="plan-name">Plan 8 clases/mes</div>
+            <div class="plan-bar-wrap"><div class="plan-bar-fill" style="width:30%;background:#38bdf8"></div></div>
+            <div class="plan-count">17</div>
+            <div class="plan-pct">30%</div>
+          </div>
+          <div class="plan-row">
+            <div class="plan-color" style="background:#10b981"></div>
+            <div class="plan-name">Clases sueltas</div>
+            <div class="plan-bar-wrap"><div class="plan-bar-fill" style="width:14%;background:#10b981"></div></div>
+            <div class="plan-count">8</div>
+            <div class="plan-pct">14%</div>
+          </div>
+          <div class="plan-row">
+            <div class="plan-color" style="background:#f59e0b"></div>
+            <div class="plan-name">Sin plan / inactivos</div>
+            <div class="plan-bar-wrap"><div class="plan-bar-fill" style="width:11%;background:#f59e0b"></div></div>
+            <div class="plan-count">6</div>
+            <div class="plan-pct">11%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEADERBOARD — Trainerize "compliance + streak ranking" -->
+      <div class="card">
+        <div class="card-hdr">
+          <div>
+            <div class="card-title">Ranking asistencia <span class="source-tag">Trainerize</span></div>
+            <div class="card-sub">Top alumnos este mes</div>
+          </div>
+          <button class="btn-sm btn-ghost">Ver todo</button>
+        </div>
+        <div class="leaderboard">
+          <div class="lb-row">
+            <div class="lb-rank gold">🥇</div>
+            <div class="lb-avatar" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)">RM</div>
+            <div style="flex:1">
+              <div class="lb-name">Rosa M.</div>
+              <div class="lb-sub">Racha: 6 semanas seguidas</div>
+            </div>
+            <div style="text-align:right">
+              <div class="lb-score">100%</div>
+              <div class="lb-sub">🔥 racha</div>
+            </div>
+          </div>
+          <div class="lb-row">
+            <div class="lb-rank silver">🥈</div>
+            <div class="lb-avatar" style="background:linear-gradient(135deg,#94a3b8,#cbd5e1)">CA</div>
+            <div style="flex:1">
+              <div class="lb-name">Carmen A.</div>
+              <div class="lb-sub">24 de 24 clases</div>
+            </div>
+            <div style="text-align:right">
+              <div class="lb-score">92%</div>
+              <div class="lb-sub">⭐ constante</div>
+            </div>
+          </div>
+          <div class="lb-row">
+            <div class="lb-rank bronze">🥉</div>
+            <div class="lb-avatar" style="background:linear-gradient(135deg,#cd7c2c,#fbbf24)">MG</div>
+            <div style="flex:1">
+              <div class="lb-name">Maca G.</div>
+              <div class="lb-sub">Plan 8 clases · 4 meses</div>
+            </div>
+            <div style="text-align:right">
+              <div class="lb-score">87%</div>
+              <div class="lb-sub">🎯 mejoró</div>
+            </div>
+          </div>
+          <div class="lb-row">
+            <div class="lb-rank">4</div>
+            <div class="lb-avatar" style="background:linear-gradient(135deg,#0369a1,#38bdf8)">AN</div>
+            <div style="flex:1">
+              <div class="lb-name">Ángela N.</div>
+              <div class="lb-sub">Plan 4 clases</div>
+            </div>
+            <div style="text-align:right">
+              <div class="lb-score">83%</div>
+            </div>
+          </div>
+          <div class="lb-row">
+            <div class="lb-rank">5</div>
+            <div class="lb-avatar" style="background:linear-gradient(135deg,#10b981,#34d399)">FR</div>
+            <div style="flex:1">
+              <div class="lb-name">Felipe R.</div>
+              <div class="lb-sub">Plan 4 clases · Jueves</div>
+            </div>
+            <div style="text-align:right">
+              <div class="lb-score">75%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAREAS — PushPress "task list + reminders" -->
+      <div class="card">
+        <div class="card-hdr">
+          <div>
+            <div class="card-title">Tareas de hoy <span class="source-tag">PushPress</span></div>
+            <div class="card-sub">Martes 27 de mayo</div>
+          </div>
+          <button class="btn-sm btn-primary">+ Agregar</button>
+        </div>
+        <div class="task-list">
+          <div class="task-item">
+            <div class="task-check"></div>
+            <div class="task-text">Escribirle a Luisa P. — 18 días sin venir</div>
+            <span class="task-tag tag-urgente">Urgente</span>
+          </div>
+          <div class="task-item">
+            <div class="task-check"></div>
+            <div class="task-text">Cobrar mensualidad mayo a Marianella y Felipe</div>
+            <span class="task-tag tag-urgente">Urgente</span>
+          </div>
+          <div class="task-item">
+            <div class="task-check"></div>
+            <div class="task-text">Planificar clase tarde 18:00 (movilidad articular)</div>
+            <span class="task-tag tag-hoy">Hoy</span>
+          </div>
+          <div class="task-item done">
+            <div class="task-check">✓</div>
+            <div class="task-text">Confirmar cupos clase miércoles 10:30</div>
+            <span class="task-tag tag-hoy">Hoy</span>
+          </div>
+          <div class="task-item">
+            <div class="task-check"></div>
+            <div class="task-text">Felicitar a Rosa M. por sus 6 meses activos 🎉</div>
+            <span class="task-tag tag-semana">Esta semana</span>
+          </div>
+          <div class="task-item">
+            <div class="task-check"></div>
+            <div class="task-text">Actualizar ficha de pago de junio</div>
+            <span class="task-tag tag-admin">Admin</span>
+          </div>
+          <div class="task-item done">
+            <div class="task-check">✓</div>
+            <div class="task-text">Subir constancia de ejercicios del mes</div>
+            <span class="task-tag tag-admin">Admin</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FILA: Planificación hoy + Ingresos -->
+    <div class="grid-2">
+
+      <!-- PLANIFICACIÓN HOY — Trainerize + Glofox "session planning" -->
+      <div class="card">
+        <div class="card-hdr">
+          <div>
+            <div class="card-title">Planificación de hoy <span class="source-tag">Trainerize + Glofox</span></div>
+            <div class="card-sub">Martes 27 de mayo · 2 clases</div>
+          </div>
+          <button class="btn-sm btn-primary">✏️ Editar</button>
+        </div>
+        <div class="plan-clase">
+          <div class="plan-slot">
+            <div>
+              <div class="plan-time">10:30</div>
+              <div class="plan-date">Mañana</div>
+            </div>
+            <div class="plan-content">
+              <div style="font-size:12px;font-weight:700;color:#0c2340">Cardio + Fuerza con noodle</div>
+              <div class="plan-tags">
+                <span class="plan-tag tag-warm">Marcha 5min</span>
+                <span class="plan-tag tag-cardio">Aqua jogging</span>
+                <span class="plan-tag tag-cardio">Burpees</span>
+                <span class="plan-tag tag-force">Curl bíceps</span>
+                <span class="plan-tag tag-flex">Estiramiento</span>
+              </div>
+              <div class="plan-inscritas">
+                <div class="mini-av">RM</div><div class="mini-av">CA</div><div class="mini-av">MG</div>
+                <div class="mini-av">AN</div><div class="mini-av">FR</div>
+                <span class="mini-count">+1 más</span>
+              </div>
+            </div>
+          </div>
+          <div class="plan-slot today">
+            <div>
+              <div class="plan-time">18:00</div>
+              <div class="plan-date">Tarde</div>
+            </div>
+            <div class="plan-content">
+              <div style="font-size:12px;font-weight:700;color:#0369a1">Movilidad articular · Adultos activos</div>
+              <div class="plan-tags">
+                <span class="plan-tag tag-warm">Rotación hombros</span>
+                <span class="plan-tag tag-flex">Movilidad columna</span>
+                <span class="plan-tag tag-force">Patadas laterales</span>
+                <span class="plan-tag tag-flex">Estiramiento cadera</span>
+              </div>
+              <div class="plan-inscritas">
+                <div class="mini-av">RM</div><div class="mini-av">LP</div><div class="mini-av">MV</div>
+                <div class="mini-av">MN</div>
+                <span class="mini-count">+3 más</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- EJERCICIOS RÁPIDOS -->
+        <div style="margin-top:14px;padding-top:14px;border-top:1px solid #f1f5f9">
+          <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">BIBLIOTECA RÁPIDA <span class="source-tag">JEFIT</span></div>
+          <div class="ex-cats">
+            <div class="ex-cat active">Todo</div>
+            <div class="ex-cat">Cardio</div>
+            <div class="ex-cat">Fuerza</div>
+            <div class="ex-cat">Flex</div>
+          </div>
+          <div class="ex-grid">
+            <div class="ex-chip"><div class="dot dot-cardio"></div>Aqua jogging</div>
+            <div class="ex-chip"><div class="dot dot-cardio"></div>Burpees en agua</div>
+            <div class="ex-chip"><div class="dot dot-strength"></div>Press de pecho</div>
+            <div class="ex-chip"><div class="dot dot-flex"></div>Movilidad cadera</div>
+            <div class="ex-chip"><div class="dot dot-warm"></div>Marcha en agua</div>
+            <div class="ex-chip" style="border-style:dashed;color:#94a3b8;font-size:10px">+ Agregar</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INGRESOS + FINANZAS — Mindbody revenue analytics -->
+      <div class="card">
+        <div class="card-hdr">
+          <div>
+            <div class="card-title">Ingresos últimos 6 meses <span class="source-tag">Mindbody</span></div>
+            <div class="card-sub">Tendencia de facturación mensual</div>
+          </div>
+          <button class="btn-sm btn-ghost">Ver detalle</button>
+        </div>
+        <div class="chart-bars">
+          <div class="bar-col">
+            <div class="bar-val">$620K</div>
+            <div class="bar" style="height:50px"></div>
+            <div class="bar-lbl">DIC</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar-val">$580K</div>
+            <div class="bar" style="height:44px;opacity:.7"></div>
+            <div class="bar-lbl">ENE</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar-val">$660K</div>
+            <div class="bar" style="height:54px"></div>
+            <div class="bar-lbl">FEB</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar-val">$700K</div>
+            <div class="bar" style="height:60px"></div>
+            <div class="bar-lbl">MAR</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar-val">$720K</div>
+            <div class="bar" style="height:64px"></div>
+            <div class="bar-lbl">ABR</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar-val">$840K</div>
+            <div class="bar" style="height:72px;background:linear-gradient(to top,#0c2340,#0369a1)"></div>
+            <div class="bar-lbl" style="font-weight:800;color:#0369a1">MAY</div>
+          </div>
+        </div>
+        <div style="margin-top:14px;padding-top:14px;border-top:1px solid #f1f5f9;display:flex;gap:16px">
+          <div><div style="font-size:10px;color:#94a3b8">Promedio 6m</div><div style="font-weight:700;color:#0c2340;font-size:13px">$686K</div></div>
+          <div><div style="font-size:10px;color:#94a3b8">Mejor mes</div><div style="font-weight:700;color:#10b981;font-size:13px">Mayo $840K</div></div>
+          <div><div style="font-size:10px;color:#94a3b8">Crecimiento</div><div style="font-weight:700;color:#0369a1;font-size:13px">↑ +35%</div></div>
+        </div>
+
+        <!-- MAPA DE CALOR DE OCUPACIÓN — Glofox -->
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid #f1f5f9">
+          <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:10px">MAPA DE OCUPACIÓN <span class="source-tag">Glofox</span></div>
+          <div class="heat-grid">
+            <div class="heat-cell heat-2"><div class="heat-label">LUN</div><div class="heat-time">10:30</div><div class="heat-pct">80%</div></div>
+            <div class="heat-cell heat-3"><div class="heat-label">LUN</div><div class="heat-time">18:00</div><div class="heat-pct">90%</div></div>
+            <div class="heat-cell heat-1"><div class="heat-label">MAR</div><div class="heat-time">10:30</div><div class="heat-pct">60%</div></div>
+            <div class="heat-cell heat-1"><div class="heat-label">MAR</div><div class="heat-time">18:00</div><div class="heat-pct">70%</div></div>
+            <div class="heat-cell heat-4"><div class="heat-label">MIÉ</div><div class="heat-time">10:30</div><div class="heat-pct">100%</div></div>
+            <div class="heat-cell heat-0"><div class="heat-label">MIÉ</div><div class="heat-time">18:00</div><div class="heat-pct">50%</div></div>
+            <div class="heat-cell heat-2"><div class="heat-label">JUE</div><div class="heat-time">18:00</div><div class="heat-pct">80%</div></div>
+            <div class="heat-cell heat-0"><div class="heat-label">VIE</div><div class="heat-time">10:30</div><div class="heat-pct">40%</div></div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:8px;font-size:10px;color:#94a3b8;align-items:center;flex-wrap:wrap">
+            <span style="display:flex;gap:3px;align-items:center"><span style="width:10px;height:10px;background:#dbeafe;border-radius:2px;display:inline-block"></span>&lt;60%</span>
+            <span style="display:flex;gap:3px;align-items:center"><span style="width:10px;height:10px;background:#7dd3fc;border-radius:2px;display:inline-block"></span>60–80%</span>
+            <span style="display:flex;gap:3px;align-items:center"><span style="width:10px;height:10px;background:#f59e0b;border-radius:2px;display:inline-block"></span>80–95%</span>
+            <span style="display:flex;gap:3px;align-items:center"><span style="width:10px;height:10px;background:#ef4444;border-radius:2px;display:inline-block"></span>100% LLENA</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FILA: Embudo retención + Estado de resultados -->
+    <div class="grid-23">
+
+      <!-- EMBUDO DE RETENCIÓN — Glofox "retention analytics" -->
+      <div class="card">
+        <div class="card-hdr">
+          <div>
+            <div class="card-title">Embudo de retención <span class="source-tag">Glofox</span></div>
+            <div class="card-sub">Mayo 2026 · Cómo se distribuyen tus alumnos</div>
+          </div>
+        </div>
+        <div class="funnel">
+          <div class="funnel-step f-new" style="width:100%">
+            <div><div class="funnel-n">57</div><div style="font-size:10px;opacity:.7">Alumnos registrados en total</div></div>
+            <div style="text-align:right"><span class="badge badge-blue">Todos</span></div>
+          </div>
+          <div class="funnel-arrow">▼</div>
+          <div class="funnel-step f-active" style="width:85%">
+            <div><div class="funnel-n">42</div><div style="font-size:10px;opacity:.7">Alumnos activos este mes</div></div>
+            <div style="text-align:right"><span class="badge badge-green">74%</span></div>
+          </div>
+          <div class="funnel-arrow">▼</div>
+          <div class="funnel-step f-risk" style="width:65%">
+            <div><div class="funnel-n">8</div><div style="font-size:10px;opacity:.7">En riesgo · más de 10 días sin asistir</div></div>
+            <div style="text-align:right"><span class="badge badge-warn">14%</span></div>
+          </div>
+          <div class="funnel-arrow">▼</div>
+          <div class="funnel-step f-churn" style="width:30%">
+            <div><div class="funnel-n">7</div><div style="font-size:10px;opacity:.7">Inactivos · sin plan activo</div></div>
+            <div style="text-align:right"><span class="badge badge-red">12%</span></div>
+          </div>
+        </div>
+        <div style="margin-top:14px;padding:12px;background:#f8fafc;border-radius:10px;font-size:12px;color:#64748b;border:1px solid #e2e8f0">
+          💡 <strong style="color:#0c2340">Insight:</strong> Recuperar a los 8 alumnos en riesgo con un mensaje personalizado podría generar hasta <strong style="color:#10b981">+$256K</strong> mensual adicional.
+        </div>
+      </div>
+
+      <!-- ESTADO DE RESULTADOS — Mindbody "revenue breakdown" -->
+      <div class="card">
+        <div class="card-hdr">
+          <div>
+            <div class="card-title">Estado de resultados · Mayo 2026 <span class="source-tag">Mindbody</span></div>
+            <div class="card-sub">Ingresos, gastos y utilidad neta del mes</div>
+          </div>
+          <button class="btn-sm btn-ghost">📥 PDF</button>
+        </div>
+        <div class="er-grid">
+          <div class="er-box er-box-ing">
+            <div class="er-label">💰 INGRESOS</div>
+            <div class="er-amount" style="color:#15803d">$840.000</div>
+            <div style="font-size:10px;color:#15803d;margin-top:4px">↑ +17% vs abril</div>
+          </div>
+          <div class="er-box er-box-gas">
+            <div class="er-label">📤 GASTOS</div>
+            <div class="er-amount" style="color:#b91c1c">$240.000</div>
+            <div style="font-size:10px;color:#b91c1c;margin-top:4px">↑ +3% vs abril</div>
+          </div>
+          <div class="er-box er-box-net">
+            <div class="er-label">✅ UTILIDAD NETA</div>
+            <div class="er-amount" style="color:#1d4ed8">$600.000</div>
+            <div style="font-size:10px;color:#1d4ed8;margin-top:4px">Margen: 71%</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div>
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">DESGLOSE INGRESOS</div>
+            <div class="er-rows">
+              <div class="er-row">
+                <div class="er-dot" style="background:#0369a1"></div>
+                <div class="er-row-name">Plan 4 clases/mes</div>
+                <div class="er-row-val">$390K</div>
+                <div class="er-row-pct">46%</div>
+              </div>
+              <div class="er-row">
+                <div class="er-dot" style="background:#38bdf8"></div>
+                <div class="er-row-name">Plan 8 clases/mes</div>
+                <div class="er-row-val">$340K</div>
+                <div class="er-row-pct">40%</div>
+              </div>
+              <div class="er-row">
+                <div class="er-dot" style="background:#10b981"></div>
+                <div class="er-row-name">Clases sueltas</div>
+                <div class="er-row-val">$80K</div>
+                <div class="er-row-pct">10%</div>
+              </div>
+              <div class="er-row">
+                <div class="er-dot" style="background:#f59e0b"></div>
+                <div class="er-row-name">Otros</div>
+                <div class="er-row-val">$30K</div>
+                <div class="er-row-pct">4%</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">DESGLOSE GASTOS</div>
+            <div class="er-rows">
+              <div class="er-row">
+                <div class="er-dot" style="background:#ef4444"></div>
+                <div class="er-row-name">Arriendo piscina</div>
+                <div class="er-row-val">$140K</div>
+                <div class="er-row-pct">58%</div>
+              </div>
+              <div class="er-row">
+                <div class="er-dot" style="background:#f87171"></div>
+                <div class="er-row-name">Materiales</div>
+                <div class="er-row-val">$40K</div>
+                <div class="er-row-pct">17%</div>
+              </div>
+              <div class="er-row">
+                <div class="er-dot" style="background:#fca5a5"></div>
+                <div class="er-row-name">Marketing</div>
+                <div class="er-row-val">$35K</div>
+                <div class="er-row-pct">15%</div>
+              </div>
+              <div class="er-row">
+                <div class="er-dot" style="background:#94a3b8"></div>
+                <div class="er-row-name">Otros</div>
+                <div class="er-row-val">$25K</div>
+                <div class="er-row-pct">10%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- HISTORIAL DE ASISTENCIA + MENSAJES RÁPIDOS -->
+    <div class="grid-2">
+
+      <!-- HISTORIAL — Trainerize "workout compliance calendar" -->
+      <div class="card">
+        <div class="card-hdr">
+          <div>
+            <div class="card-title">Historial Rosa Martínez <span class="source-tag">Trainerize compliance</span></div>
+            <div class="card-sub">Mayo 2026 · Todas las clases</div>
+          </div>
+          <span class="badge badge-gold">🏅 Racha perfecta 6 semanas</span>
+        </div>
+        <div class="asist-grid">
+          <div class="asist-day"><div class="asist-label">L</div><div class="asist-dot asist-si">✓</div></div>
+          <div class="asist-day"><div class="asist-label">M</div><div class="asist-dot asist-si">✓</div></div>
+          <div class="asist-day"><div class="asist-label">X</div><div class="asist-dot asist-si">✓</div></div>
+          <div class="asist-day"><div class="asist-label">J</div><div class="asist-dot asist-si">✓</div></div>
+          <div class="asist-day"><div class="asist-label">V</div><div class="asist-dot asist-si">✓</div></div>
+          <div class="asist-day"><div class="asist-label">L</div><div class="asist-dot asist-si">✓</div></div>
+          <div class="asist-day"><div class="asist-label">M</div><div class="asist-dot asist-si">✓</div></div>
+          <div class="asist-day"><div class="asist-label">X</div><div class="asist-dot asist-si">✓</div></div>
+          <div class="asist-day"><div class="asist-label">J</div><div class="asist-dot asist-si">✓</div></div>
+          <div class="asist-day"><div class="asist-label">V</div><div class="asist-dot asist-no">–</div></div>
+          <div class="asist-day"><div class="asist-label">L</div><div class="asist-dot asist-si">✓</div></div>
+          <div class="asist-day"><div class="asist-label">M</div><div class="asist-dot asist-si">✓</div></div>
+          <div class="asist-day"><div class="asist-label">X</div><div class="asist-dot asist-si">✓</div></div>
+          <div class="asist-day"><div class="asist-label">J</div><div class="asist-dot asist-si">✓</div></div>
+          <div class="asist-day"><div class="asist-label">V</div><div class="asist-dot asist-si">✓</div></div>
+          <div class="asist-day"><div class="asist-label">L</div><div class="asist-dot asist-si">✓</div></div>
+          <div class="asist-day"><div class="asist-label">M</div><div class="asist-dot asist-hoy">HOY</div></div>
+          <div class="asist-day"><div class="asist-label">X</div><div class="asist-dot asist-fut">·</div></div>
+          <div class="asist-day"><div class="asist-label">J</div><div class="asist-dot asist-fut">·</div></div>
+          <div class="asist-day"><div class="asist-label">V</div><div class="asist-dot asist-fut">·</div></div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:10px;font-size:11px;color:#64748b;flex-wrap:wrap">
+          <span style="display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:11px;height:11px;background:#dbeafe;border-radius:3px"></span>Asistió</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:11px;height:11px;background:#f1f5f9;border-radius:3px"></span>No fue</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:11px;height:11px;background:#0369a1;border-radius:3px"></span>Hoy</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:11px;height:11px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:3px"></span>Por venir</span>
+        </div>
+        <!-- Mini stats -->
+        <div style="display:flex;gap:0;margin-top:14px;padding-top:12px;border-top:1px solid #f1f5f9">
+          <div style="flex:1;text-align:center;border-right:1px solid #f1f5f9">
+            <div style="font-size:18px;font-weight:800;color:#0369a1">16</div>
+            <div style="font-size:10px;color:#94a3b8">Clases este mes</div>
+          </div>
+          <div style="flex:1;text-align:center;border-right:1px solid #f1f5f9">
+            <div style="font-size:18px;font-weight:800;color:#10b981">6</div>
+            <div style="font-size:10px;color:#94a3b8">Meses activa</div>
+          </div>
+          <div style="flex:1;text-align:center">
+            <div style="font-size:18px;font-weight:800;color:#f59e0b">1</div>
+            <div style="font-size:10px;color:#94a3b8">Falta del mes</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTRO DE MENSAJES — PushPress "automated messaging" -->
+      <div class="card">
+        <div class="card-hdr">
+          <div>
+            <div class="card-title">Centro de mensajes <span class="source-tag">PushPress</span></div>
+            <div class="card-sub">Contacto directo con alumnos en riesgo</div>
+          </div>
+          <button class="btn-sm btn-primary">📨 Mensaje masivo</button>
+        </div>
+
+        <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">PLANTILLAS RÁPIDAS</div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;background:#f0fdf4;border:1px solid #bbf7d0;cursor:pointer">
+            <span style="font-size:14px">💬</span>
+            <div style="flex:1">
+              <div style="font-size:11px;font-weight:700;color:#15803d">¡Te echamos de menos!</div>
+              <div style="font-size:10px;color:#94a3b8">Para alumnos sin clase hace +10 días</div>
+            </div>
+            <button class="msg-btn msg-btn-wa">Usar</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;background:#fffbeb;border:1px solid #fde68a;cursor:pointer">
+            <span style="font-size:14px">💰</span>
+            <div style="flex:1">
+              <div style="font-size:11px;font-weight:700;color:#92400e">Recordatorio de pago</div>
+              <div style="font-size:10px;color:#94a3b8">Para mensualidades pendientes</div>
+            </div>
+            <button class="msg-btn" style="background:#fef3c7;color:#92400e">Usar</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;background:#eff6ff;border:1px solid #bfdbfe;cursor:pointer">
+            <span style="font-size:14px">🎉</span>
+            <div style="flex:1">
+              <div style="font-size:11px;font-weight:700;color:#1d4ed8">Felicitación por hito</div>
+              <div style="font-size:10px;color:#94a3b8">Para alumnas que cumplen meses activas</div>
+            </div>
+            <button class="msg-btn" style="background:#dbeafe;color:#1d4ed8">Usar</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;background:#f3e8ff;border:1px solid #e9d5ff;cursor:pointer">
+            <span style="font-size:14px">📋</span>
+            <div style="flex:1">
+              <div style="font-size:11px;font-weight:700;color:#7e22ce">Constancia de ejercicios</div>
+              <div style="font-size:10px;color:#94a3b8">Comprobante mensual de asistencia</div>
+            </div>
+            <button class="msg-btn" style="background:#f3e8ff;color:#7e22ce">Usar</button>
+          </div>
+        </div>
+
+        <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">CONTACTAR DIRECTAMENTE</div>
+        <div class="msg-list">
+          <div class="msg-item">
+            <div class="msg-avatar">LP</div>
+            <div class="msg-info">
+              <div class="msg-name">Luisa P.</div>
+              <div class="msg-reason"><span class="msg-days">18 días sin clase</span> · Plan 4 clases · En riesgo</div>
+            </div>
+            <div class="msg-actions">
+              <button class="msg-btn msg-btn-wa">💬 WA</button>
+              <button class="msg-btn msg-btn-note">📝</button>
+            </div>
+          </div>
+          <div class="msg-item">
+            <div class="msg-avatar" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)">MV</div>
+            <div class="msg-info">
+              <div class="msg-name">María V.</div>
+              <div class="msg-reason"><span class="msg-days">14 días sin clase</span> · Plan 8 clases</div>
+            </div>
+            <div class="msg-actions">
+              <button class="msg-btn msg-btn-wa">💬 WA</button>
+              <button class="msg-btn msg-btn-note">📝</button>
+            </div>
+          </div>
+          <div class="msg-item">
+            <div class="msg-avatar" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">MN</div>
+            <div class="msg-info">
+              <div class="msg-name">Marianella N.</div>
+              <div class="msg-reason"><span style="font-size:10px;font-weight:700;color:#92400e">💰 Pago pendiente</span> · Mayo sin regularizar</div>
+            </div>
+            <div class="msg-actions">
+              <button class="msg-btn msg-btn-wa">💬 WA</button>
+              <button class="msg-btn msg-btn-note">📝</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer-insp">
+      Maqueta de inspiración · Basada en <strong>ABC Trainerize</strong> · <strong>Glofox</strong> · <strong>PushPress</strong> · <strong>JEFIT</strong> · <strong>Mindbody</strong><br>
+      <span style="font-size:10px">Los datos son de ejemplo · Para uso interno Movimiento en Agua</span>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>
