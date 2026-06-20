@@ -52,7 +52,7 @@ section{padding:88px 24px}
 .section-sub{font-size:17px;color:var(--gray-500);max-width:540px}
 
 /* HERO LOGO */
-.hero-logo-corner{position:absolute;bottom:90px;right:52px;width:88px;height:88px;object-fit:contain;mix-blend-mode:screen;filter:brightness(1.2) contrast(1.05);opacity:.85;z-index:2}
+.hero-logo-corner{position:absolute;bottom:90px;right:52px;width:88px;height:88px;object-fit:contain;filter:brightness(0) invert(1);opacity:.85;z-index:2}
 /* BENEFICIOS */
 #beneficios{background:var(--white)}
 .benefits-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:40px}
@@ -617,10 +617,11 @@ tr:hover td{background:var(--blue-bg)}
 
 <nav class="nav">
   <div class="nav-logo" style="display:flex;align-items:center;gap:10px">
-    <img src="logo-mea.png" alt="Movimiento en Agua" style="height:40px;width:40px;object-fit:contain;filter:brightness(0) saturate(100%) invert(21%) sepia(97%) saturate(1500%) hue-rotate(188deg) brightness(90%)">
+    <img src="logo-mea.png" alt="Movimiento en Agua" style="height:40px;width:40px;object-fit:contain;filter:brightness(0) saturate(100%) invert(37%) sepia(93%) saturate(575%) hue-rotate(182deg) brightness(97%)">
     <span style="font-size:16px;font-weight:800;color:var(--blue-dark)">Movimiento en Agua</span>
   </div>
   <div class="nav-links">
+    <a href="#beneficios">Beneficios</a>
     <a href="#about">Fundadora</a>
     <a href="#schedule">Horarios</a>
     <a href="https://wa.me/56940608592?text=Hola! Me interesa el Aqua Fitness de Movimiento en Agua 🌊" target="_blank" style="color:#16a34a;font-weight:600">WhatsApp</a>
@@ -633,7 +634,7 @@ tr:hover td{background:var(--blue-bg)}
   <div class="hero-content">
     <div class="hero-badge">Maitencillo · Hotel MAE</div>
     <h1>Movimiento<br>en Agua</h1>
-    <p>Aqua fitness para moverse, sentirse bien y disfrutar el agua. Para todos los niveles.</p>
+    <p>La disciplina más efectiva y segura para moverte, sentirte bien y cuidar tu cuerpo. Apta para todos los niveles y edades.</p>
     <div class="hero-actions">
       <a href="https://wa.me/56940608592?text=Hola! Me interesa el Aqua Fitness de Movimiento en Agua 🌊" target="_blank" class="btn" style="background:white;color:var(--blue-dark);font-weight:700">💬 Quiero una clase</a>
       <a href="#" class="btn" style="background:rgba(255,255,255,.15);color:white;border:2px solid rgba(255,255,255,.3)" onclick="showView('login');return false">Portal alumnos →</a>
@@ -646,7 +647,7 @@ tr:hover td{background:var(--blue-bg)}
 
 <section id="beneficios">
   <div class="container">
-    <div class="section-label">¿Por qué el agua?</div>
+    <div class="section-label" style="font-size:16px;letter-spacing:1.5px">¿Por qué el agua?</div>
     <h2 class="section-title">Beneficios del Aqua Fitness</h2>
     <p class="section-sub">Respaldado por evidencia científica internacional.</p>
     <div class="benefits-grid">
@@ -703,7 +704,7 @@ tr:hover td{background:var(--blue-bg)}
 <section style="background:var(--gray-900);padding:72px 24px">
   <div class="container" style="max-width:760px;text-align:center">
     <div style="font-size:48px;color:var(--blue-light);line-height:1;margin-bottom:20px;font-family:Georgia,serif">"</div>
-    <blockquote style="font-size:clamp(18px,2.5vw,24px);color:rgba(255,255,255,.92);line-height:1.75;font-style:italic;margin-bottom:28px">El agua siempre fue mi espacio de libertad. Quise crear un lugar donde más personas pudieran sentir lo mismo — moverse sin dolor, recuperar energía y disfrutar cada clase.</blockquote>
+    <blockquote style="font-size:clamp(18px,2.5vw,24px);color:rgba(255,255,255,.92);line-height:1.75;font-style:italic;margin-bottom:28px">El deporte siempre fue mi espacio de libertad. Quise crear un lugar donde más personas pudieran sentir lo mismo — moverse sin dolor, recuperar energía y disfrutar cada clase.</blockquote>
     <div style="font-weight:700;color:var(--blue-light);font-size:15px">Martina Lescovich</div>
     <div style="font-size:13px;color:rgba(255,255,255,.45);margin-top:4px">Fundadora de Movimiento en Agua</div>
   </div>
@@ -711,7 +712,7 @@ tr:hover td{background:var(--blue-bg)}
 
 <section id="about">
   <div class="container">
-    <div class="section-label">Fundadora</div>
+    <div class="section-label" style="font-size:16px;letter-spacing:1.5px">Fundadora</div>
     <h2 class="section-title">La persona detrás del agua</h2>
     <div class="about-grid">
       <div class="about-img">
