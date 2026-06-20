@@ -47,15 +47,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 /* SECTIONS */
 section{padding:72px 24px}
 .container{max-width:1080px;margin:0 auto}
-.section-label{font-size:16px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
-.section-title{font-size:clamp(28px,4vw,44px);font-weight:800;color:var(--gray-900);margin-bottom:8px;letter-spacing:-1px}
-.section-sub{font-size:17px;color:var(--gray-500);max-width:540px}
+.section-label{font-size:15px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-bottom:4px}
+.section-title{font-size:clamp(28px,4vw,44px);font-weight:800;color:var(--gray-900);margin-bottom:6px;letter-spacing:-1px;line-height:1.05}
+.section-sub{font-size:16px;color:var(--gray-500);max-width:540px;line-height:1.5}
 
 /* HERO LOGO */
 .hero-logo-corner{position:absolute;bottom:90px;right:52px;width:88px;height:88px;object-fit:contain;filter:brightness(0) invert(1);opacity:.85;z-index:2}
 /* BENEFICIOS */
 #beneficios{background:var(--white)}
-.benefits-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px}
+.benefits-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:20px}
 .benefit-card{background:white;border-radius:16px;padding:22px 16px;box-shadow:var(--sh);text-align:center;transition:transform var(--t);border:1px solid var(--gray-100);display:flex;flex-direction:column;align-items:center}
 .benefit-card:hover{transform:translateY(-3px);box-shadow:var(--sh2)}
 .benefit-icon-wrap{width:44px;height:44px;background:var(--blue-bg);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;color:var(--blue-dark);flex-shrink:0}
@@ -64,7 +64,7 @@ section{padding:72px 24px}
 .benefit-cite{font-size:10px;color:var(--gray-400);margin-top:10px;font-style:italic;border-top:1px solid var(--gray-100);padding-top:8px;line-height:1.4;width:100%}
 /* ABOUT */
 #about{background:var(--blue-bg)}
-.about-grid{display:grid;grid-template-columns:0.6fr 1.4fr;gap:56px;align-items:center;margin-top:24px}
+.about-grid{display:grid;grid-template-columns:0.6fr 1.4fr;gap:56px;align-items:center;margin-top:20px}
 .about-img{border-radius:var(--rl);overflow:hidden;aspect-ratio:2/3;background:var(--blue-xlight)}
 .about-img img{width:100%;height:100%;object-fit:cover;object-position:center 0%;display:block}
 .about-text h3{font-size:30px;font-weight:800;margin-bottom:6px;letter-spacing:-.5px}
@@ -84,7 +84,7 @@ section{padding:72px 24px}
 
 /* SCHEDULE */
 #schedule{background:var(--blue-bg)}
-.sch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:24px}
+.sch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:40px}
 .sch-card{background:white;border-radius:var(--rl);padding:36px;box-shadow:var(--sh);border-top:4px solid var(--blue);transition:transform var(--t)}
 .sch-card:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
 .sch-days{font-size:12px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
@@ -766,7 +766,7 @@ tr:hover td{background:var(--blue-bg)}
   </div>
 </section>
 
-<section id="schedule">
+<section id="schedule" style="padding-top:52px">
   <div class="container">
     <div class="section-label">Clases</div>
     <h2 class="section-title">Horarios semanales</h2>
@@ -775,12 +775,12 @@ tr:hover td{background:var(--blue-bg)}
       <div class="sch-card">
         <div class="sch-days">Lunes · Miércoles · Viernes</div>
         <div class="sch-time">10:30</div>
-        <div class="sch-detail">Turno mañana · 60 min aprox.</div>
+        <div class="sch-detail">Turno mañana · 50 min aprox.</div>
       </div>
       <div class="sch-card">
         <div class="sch-days">Martes · Jueves</div>
         <div class="sch-time">18:00</div>
-        <div class="sch-detail">Turno tarde · 60 min aprox.</div>
+        <div class="sch-detail">Turno tarde · 50 min aprox.</div>
       </div>
     </div>
   </div>
