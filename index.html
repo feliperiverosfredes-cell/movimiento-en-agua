@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Martina Lescovich · Aqua Fitness</title>
+<!-- Seguridad -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self'">
+<!-- SEO -->
+<meta name="description" content="Aqua Fitness en Maitencillo · Hotel MAE. La disciplina más efectiva y segura para moverte, sentirte bien. Apta para todos los niveles y edades.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Movimiento en Agua · Aqua Fitness Maitencillo">
+<meta property="og:description" content="Clases de Aqua Fitness en Hotel MAE, Maitencillo. Para todos los niveles y edades.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://movimientoenagua.cl">
+<link rel="canonical" href="https://movimientoenagua.cl">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -100,6 +114,19 @@ section{padding:72px 24px}
 .loc-info p{color:var(--gray-500);font-size:16px;margin-bottom:4px}
 .loc-badge{display:inline-block;background:var(--blue);color:white;padding:4px 14px;border-radius:50px;font-size:12px;font-weight:600;margin-top:12px}
 
+/* INSTAGRAM */
+.ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ig-card{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:1/1;display:block;cursor:pointer;box-shadow:var(--sh)}
+.ig-placeholder{width:100%;height:100%}
+.ig-overlay{position:absolute;inset:0;background:rgba(3,105,161,.65);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:white;opacity:0;transition:opacity .25s ease;z-index:1}
+.ig-card:hover .ig-overlay{opacity:1}
+.btn-ig{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:50px;font-size:15px;font-weight:700;color:white;text-decoration:none;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);transition:transform .2s,box-shadow .2s;box-shadow:0 6px 24px rgba(220,39,67,.35)}
+.btn-ig:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(220,39,67,.45)}
+@media(max-width:768px){
+  .ig-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;gap:12px;padding-bottom:8px;margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px}
+  .ig-card{flex:0 0 72vw;max-width:260px;scroll-snap-align:start}
+  .ig-overlay{opacity:1;background:rgba(3,105,161,.45)}
+}
 /* FOOTER */
 footer{background:var(--gray-900);color:var(--gray-400);text-align:center;padding:40px 24px;font-size:14px}
 footer strong{color:white}
@@ -698,7 +725,7 @@ tr:hover td{background:var(--blue-bg)}
     <a href="#beneficios">Beneficios</a>
     <a href="#about">Fundadora</a>
     <a href="#schedule">Horarios</a>
-    <a href="https://wa.me/56940608592?text=Hola! Me interesa el Aqua Fitness de Movimiento en Agua 🌊" target="_blank" style="color:#16a34a;font-weight:600">WhatsApp</a>
+    <a href="https://wa.me/56940608592?text=Hola! Me interesa el Aqua Fitness de Movimiento en Agua 🌊" target="_blank" rel="noopener noreferrer" style="color:#16a34a;font-weight:600">WhatsApp</a>
     <a href="#" class="btn btn-primary btn-sm" onclick="showView('login');return false">Portal alumnos</a>
   </div>
 </nav>
@@ -710,7 +737,7 @@ tr:hover td{background:var(--blue-bg)}
     <h1>Movimiento<br>en Agua</h1>
     <p>La disciplina más efectiva y segura para moverte, sentirte bien y cuidar tu cuerpo. Apta para todos los niveles y edades.</p>
     <div class="hero-actions">
-      <a href="https://wa.me/56940608592?text=Hola! Me interesa el Aqua Fitness de Movimiento en Agua 🌊" target="_blank" class="btn" style="background:white;color:var(--blue-dark);font-weight:700">💬 Quiero una clase</a>
+      <a href="https://wa.me/56940608592?text=Hola! Me interesa el Aqua Fitness de Movimiento en Agua 🌊" target="_blank" rel="noopener noreferrer" class="btn" style="background:white;color:var(--blue-dark);font-weight:700">💬 Quiero una clase</a>
       <a href="#" class="btn" style="background:rgba(255,255,255,.15);color:white;border:2px solid rgba(255,255,255,.3)" onclick="showView('login');return false">Portal alumnos →</a>
     </div>
   </div>
@@ -820,7 +847,7 @@ tr:hover td{background:var(--blue-bg)}
           </div>
         </div>
         <div style="margin-top:28px">
-          <a href="https://wa.me/56940608592?text=Hola! Me interesa el Aqua Fitness de Movimiento en Agua 🌊" target="_blank" class="btn btn-primary">💬 Contactar Movimiento en Agua</a>
+          <a href="https://wa.me/56940608592?text=Hola! Me interesa el Aqua Fitness de Movimiento en Agua 🌊" target="_blank" rel="noopener noreferrer" class="btn btn-primary">💬 Contactar Movimiento en Agua</a>
         </div>
       </div>
     </div>
@@ -860,11 +887,77 @@ tr:hover td{background:var(--blue-bg)}
   </div>
 </section>
 
+<section id="instagram" style="background:var(--white);padding:72px 24px">
+  <div class="container" style="max-width:1080px">
+
+    <!-- Header -->
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:36px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <!-- Instagram icon -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/><stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs>
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="url(#ig-grad)" stroke-width="2" fill="none"/>
+          <circle cx="12" cy="12" r="4" stroke="url(#ig-grad)" stroke-width="2" fill="none"/>
+          <circle cx="17.5" cy="6.5" r="1.2" fill="url(#ig-grad)"/>
+        </svg>
+        <span style="font-size:15px;font-weight:700;color:var(--gray-500);letter-spacing:.5px">@movimientoenagua</span>
+      </div>
+      <h2 class="section-title" style="margin-bottom:6px">Síguenos en Instagram</h2>
+      <p class="section-sub" style="text-align:center;margin:0 auto">Clases, consejos y la energía del agua — cada semana en nuestro feed.</p>
+    </div>
+
+    <!-- Grid de fotos -->
+    <div class="ig-grid">
+      <!-- Foto 1 -->
+      <a href="https://www.instagram.com/movimientoenagua" target="_blank" rel="noopener noreferrer" class="ig-card">
+        <div class="ig-overlay">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span style="font-size:13px;font-weight:700">Ver en Instagram</span>
+        </div>
+        <div class="ig-placeholder" style="background:linear-gradient(135deg,#0EA5E9 0%,#0369A1 100%)">
+          <img src="martina-clase.jpg" alt="Clase aqua fitness" style="width:100%;height:100%;object-fit:cover;object-position:center 20%">
+        </div>
+      </a>
+
+      <!-- Foto 2 -->
+      <a href="https://www.instagram.com/movimientoenagua" target="_blank" rel="noopener noreferrer" class="ig-card">
+        <div class="ig-overlay">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span style="font-size:13px;font-weight:700">Ver en Instagram</span>
+        </div>
+        <div class="ig-placeholder" style="background:linear-gradient(135deg,#38BDF8 0%,#0EA5E9 100%)">
+          <img src="hero-pool.jpg" alt="Piscina Hotel MAE" style="width:100%;height:100%;object-fit:cover;object-position:center 30%">
+        </div>
+      </a>
+
+      <!-- Foto 3 -->
+      <a href="https://www.instagram.com/movimientoenagua" target="_blank" rel="noopener noreferrer" class="ig-card">
+        <div class="ig-overlay">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span style="font-size:13px;font-weight:700">Ver en Instagram</span>
+        </div>
+        <div class="ig-placeholder" style="background:linear-gradient(135deg,#BAE6FD 0%,#38BDF8 100%)">
+          <img src="martina-foto.jpg" alt="Martina Lescovich" style="width:100%;height:100%;object-fit:cover;object-position:center 0%">
+        </div>
+      </a>
+    </div>
+
+    <!-- CTA Instagram -->
+    <div style="text-align:center;margin-top:32px">
+      <a href="https://www.instagram.com/movimientoenagua" target="_blank" rel="noopener noreferrer" class="btn-ig">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        Seguir en Instagram
+      </a>
+    </div>
+
+  </div>
+</section>
+
 <section class="cta-section">
   <div class="container">
     <h2>¿Lista para empezar?</h2>
     <p>Primera clase sin compromiso. Escríbenos y reserva tu lugar en el agua.</p>
-    <a href="https://wa.me/56940608592?text=Hola! Me interesa el Aqua Fitness de Movimiento en Agua 🌊 ¿Cómo puedo reservar una clase?" target="_blank" class="btn-whatsapp">
+    <a href="https://wa.me/56940608592?text=Hola! Me interesa el Aqua Fitness de Movimiento en Agua 🌊 ¿Cómo puedo reservar una clase?" target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       Quiero mi primera clase
     </a>
@@ -883,7 +976,7 @@ tr:hover td{background:var(--blue-bg)}
         <div>
           <div style="font-weight:700;font-size:14px;color:#0c2340;margin-bottom:4px">Bienestar corporativo</div>
           <div style="font-size:13px;color:#64748b;line-height:1.5;margin-bottom:10px">Clases para los colaboradores de tu empresa.</div>
-          <a href="https://wa.me/56940608592?text=Hola! Tengo una empresa y me interesa ofrecer clases de Aqua Fitness a mis colaboradores 🏢" target="_blank" style="font-size:12px;font-weight:700;color:#0369a1;text-decoration:none">Consultar →</a>
+          <a href="https://wa.me/56940608592?text=Hola! Tengo una empresa y me interesa ofrecer clases de Aqua Fitness a mis colaboradores 🏢" target="_blank" rel="noopener noreferrer" style="font-size:12px;font-weight:700;color:#0369a1;text-decoration:none">Consultar →</a>
         </div>
       </div>
       <div style="background:white;border:1px solid #e2e8f0;border-radius:14px;padding:20px 22px;display:flex;align-items:flex-start;gap:14px">
@@ -891,7 +984,7 @@ tr:hover td{background:var(--blue-bg)}
         <div>
           <div style="font-weight:700;font-size:14px;color:#0c2340;margin-bottom:4px">Piscina privada</div>
           <div style="font-size:13px;color:#64748b;line-height:1.5;margin-bottom:10px">¿Tienes piscina climatizada en casa? Llevamos la clase a ti.</div>
-          <a href="https://wa.me/56940608592?text=Hola! Tengo una piscina climatizada y me interesa hacer clases de Aqua Fitness privadas 🏠🌊" target="_blank" style="font-size:12px;font-weight:700;color:#0369a1;text-decoration:none">Consultar →</a>
+          <a href="https://wa.me/56940608592?text=Hola! Tengo una piscina climatizada y me interesa hacer clases de Aqua Fitness privadas 🏠🌊" target="_blank" rel="noopener noreferrer" style="font-size:12px;font-weight:700;color:#0369a1;text-decoration:none">Consultar →</a>
         </div>
       </div>
     </div>
@@ -928,7 +1021,7 @@ tr:hover td{background:var(--blue-bg)}
       </div>
       <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="doLogin()">Ingresar</button>
       <div class="forgot-link">¿Olvidaste tu contraseña? <a onclick="document.getElementById('forgot-msg').style.display='block'">Haz clic aquí</a></div>
-      <div id="forgot-msg" class="forgot-msg">Escríbenos por WhatsApp para recuperar tu acceso:<br>📱 <strong><a href="https://wa.me/56940608592?text=Hola! Necesito recuperar mi acceso al portal de alumnos 🌊" target="_blank">+56 9 4060 8592</a></strong><br>📧 mar.lescovich@gmail.com</div>
+      <div id="forgot-msg" class="forgot-msg">Escríbenos por WhatsApp para recuperar tu acceso:<br>📱 <strong><a href="https://wa.me/56940608592?text=Hola! Necesito recuperar mi acceso al portal de alumnos 🌊" target="_blank" rel="noopener noreferrer">+56 9 4060 8592</a></strong><br>📧 mar.lescovich@gmail.com</div>
       <a class="login-back" onclick="showView('landing')">← Volver al inicio</a>
     </div>
   </div>
@@ -2447,7 +2540,7 @@ function renderDashPriority(enRiesgo,morosas,hitos){
     <div class="dash-stu-row ${cls}" onclick="openStuDrawer('${s.id}')">
       <div class="avatar" style="width:32px;height:32px;font-size:11px;flex-shrink:0">${ini(s.nom)}</div>
       <div class="dsi"><div class="dsn">${esc(s.nom.split(' ').slice(0,2).join(' '))} ${badge}</div><div class="dsm">${meta}</div></div>
-      <a href="https://wa.me/56940608592?text=Hola%20${encodeURIComponent(s.nom.split(' ')[0])}!" target="_blank" class="msg-btn msg-btn-wa" onclick="event.stopPropagation()">💬</a>
+      <a href="https://wa.me/56940608592?text=Hola%20${encodeURIComponent(s.nom.split(' ')[0])}!" target="_blank" rel="noopener noreferrer" class="msg-btn msg-btn-wa" onclick="event.stopPropagation()">💬</a>
     </div>`).join('');
 }
 
@@ -2577,7 +2670,7 @@ function renderDashMessages(enRiesgo,morosas){
       <div class="msg-av" style="background:${color}">${ini(s.nom)}</div>
       <div class="msg-info"><div class="msg-nm">${s.nom.split(' ').slice(0,2).join(' ')}</div><div class="msg-rs">${reason}</div></div>
       <div class="msg-acts">
-        <a href="https://wa.me/56940608592?text=Hola%20${encodeURIComponent(s.nom.split(' ')[0])}!" target="_blank" class="msg-btn msg-btn-wa">💬 WA</a>
+        <a href="https://wa.me/56940608592?text=Hola%20${encodeURIComponent(s.nom.split(' ')[0])}!" target="_blank" rel="noopener noreferrer" class="msg-btn msg-btn-wa">💬 WA</a>
         <button class="msg-btn msg-btn-n" onclick="openStuDrawer('${s.id}')">📝</button>
       </div>
     </div>`).join('');
@@ -3273,7 +3366,7 @@ function renderAdminDocs(){
     <div class="doc-icon">📄</div>
     <div><div class="doc-name">${esc(d.nom)}</div><div class="doc-desc">${esc(d.desc||d.url)}</div></div>
     <div class="doc-acts">
-      <a href="${esc(d.url)}" target="_blank" class="btn btn-sm btn-ghost">Abrir</a>
+      <a href="${esc(d.url)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-ghost">Abrir</a>
       <button class="btn btn-sm btn-danger" onclick="delDoc('${d.id}')">Eliminar</button>
     </div>
   </div>`).join('');
@@ -3394,7 +3487,7 @@ function renderStuVids(){
     <div class="video-info">
       <div class="video-title">${esc(v.tit)}</div>
       <div class="video-desc">${esc(v.desc||'')}</div>
-      <div class="video-acts"><a href="${esc(v.url)}" target="_blank" class="btn btn-sm btn-primary">Ver video</a></div>
+      <div class="video-acts"><a href="${esc(v.url)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">Ver video</a></div>
     </div>
   </div>`).join('');
 }
@@ -3404,7 +3497,7 @@ function renderStuDocs(){
   l.innerHTML=docs.map(d=>`<div class="doc-item">
     <div class="doc-icon">📄</div>
     <div><div class="doc-name">${esc(d.nom)}</div><div class="doc-desc">${esc(d.desc||'')}</div></div>
-    <div class="doc-acts"><a href="${esc(d.url)}" target="_blank" class="btn btn-sm btn-primary">Abrir</a></div>
+    <div class="doc-acts"><a href="${esc(d.url)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">Abrir</a></div>
   </div>`).join('');
 }
 
