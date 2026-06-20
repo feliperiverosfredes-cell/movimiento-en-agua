@@ -15,7 +15,8 @@
   --r:12px;--rl:20px;--sh:0 4px 24px rgba(14,165,233,.10);
   --sh2:0 8px 40px rgba(14,165,233,.18);--t:.2s ease
 }
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;color:var(--gray-900);background:var(--white);line-height:1.6}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;color:var(--gray-900);background:var(--white);line-height:1.6;overflow-x:hidden}
+html{overflow-x:hidden}
 .hidden{display:none!important}
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:50px;border:none;cursor:pointer;font-size:15px;font-weight:600;transition:all var(--t);text-decoration:none;font-family:inherit}
@@ -486,12 +487,14 @@ tr:hover td{background:var(--blue-bg)}
   .hero-actions .btn{width:100%;max-width:320px;justify-content:center}
 
   /* ── SECCIONES LANDING ── */
-  section{padding:52px 20px}
+  section{padding:52px 20px;width:100%;box-sizing:border-box}
   .section-title{font-size:clamp(24px,7vw,36px)}
   .section-sub{font-size:14px}
+  .container{width:100%;box-sizing:border-box}
 
-  /* ── BENEFICIOS ── */
-  .benefits-grid{grid-template-columns:repeat(2,1fr)!important;gap:12px}
+  /* ── BENEFICIOS: carrusel deslizable ── */
+  .benefits-grid{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;gap:14px;padding-bottom:12px;margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px}
+  .benefit-card{flex:0 0 72vw;max-width:280px;scroll-snap-align:start}
 
   /* ── ABOUT ── */
   .about-grid{grid-template-columns:1fr;gap:28px}
