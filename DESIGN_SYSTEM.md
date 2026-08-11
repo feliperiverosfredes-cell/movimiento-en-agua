@@ -341,8 +341,8 @@ Sin dependencias externas. Renderiza como SF Pro en Mac/iOS, Segoe UI en Windows
 - **Sin tecnicismos** — el agua es accesible para todas
 
 ### Número de WhatsApp
-- Siempre: `56940608592` (sin +, sin espacios en los links)
-- Formato de display: `+56 9 4060 8592`
+- Siempre: `56983919238` (WhatsApp Business, sin +, sin espacios en los links)
+- Formato de display: `+56 9 8391 9238`
 
 ---
 
